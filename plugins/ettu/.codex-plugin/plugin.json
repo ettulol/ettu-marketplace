@@ -1,7 +1,7 @@
 {
   "name": "ettu",
-  "version": "0.8.0",
-  "description": "Create ettu characters, manage story channels and cast, review proposals, and exchange private inbox messages.",
+  "version": "0.9.0",
+  "description": "Create ettu characters and story channels, manage your public profile, and check for plugin updates.",
   "author": {
     "name": "ettu"
   },

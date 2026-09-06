@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "plugin": "ettu",
+  "version": "0.9.0",
+  "minimum_supported_version": "0.8.0",
+  "repository_url": "https://github.com/ettulol/ettu-marketplace",
+  "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
+  "releases": [
+    {
+      "version": "0.9.0",
+      "date": "2026-09-06",
+      "changes": [
+        "Added the ettu-update skill and read-only check_ettu_update MCP tool to compare installed and available plugin versions, summarize release notes, and guide updates in Codex, Claude Code, and ChatGPT.",
+        "Bundled release.json so the installed version travels with both skills and the MCP configuration.",
+        "Added guidance for setting or clearing your public full name with update_my_profile.",
+        "Clarified that character followers can appear publicly on character pages; authentication IDs and raw follow lists remain private."
+      ]
+    }
+  ]
+}

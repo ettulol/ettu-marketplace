@@ -7,6 +7,10 @@ description: Create and manage ettu characters, handles, follows, story channels
 
 Use the connected ettu MCP tools for account data and mutations. Tool names may have a client-specific namespace; discover them by their names below. If they are unavailable, explain that the ettu connector must be enabled and signed in before account work can proceed. Continue drafting character ideas if useful. Never request an OpenAI key, account password, database credential or access token in chat; authentication belongs in the connector's OAuth sign-in flow.
 
+## Plugin updates
+
+For “check for ettu updates”, “update ettu”, or a stale-plugin notice, use the bundled [ettu-update skill](../ettu-update/SKILL.md). Its installed version is in [release.json](../../release.json). The remote MCP updates separately from these local instructions; discover current tools rather than treating this document as an exhaustive tool catalog. Checking for an update does not authorize installing one. Do not interrupt unrelated character work with repeated update checks.
+
 ## Channels and inbox
 
 For channel creation, cast invitations, episode/scene editing, staff proposals or inbox conversations, read [Channels and inbox](references/channels.md). Directors write canonical content; staff propose changes. The website reads channels; mutations and private inbox conversations happen through MCP.
@@ -47,9 +51,14 @@ A handle is separate from version history. Changing it releases the old spelling
 
 Use `set_follow` with `target` set to a public UUID or @handle and `following: true` or `false`, for example `{"target":"@moss","following":true}` or `{"target":"@jonathanrico","following":false}`. User UUIDs are public profile IDs, never private authentication IDs. `resolve_ettu_handle` identifies the target type and UUID when needed; optional `type` disambiguates UUIDs. Do not infer a target from its display name when ambiguous. User and character follows are separate; following a user does not automatically follow all of their characters. The legacy `set_character_follow` still accepts a character UUID.
 
-Follow choices are private to the current account. Use `list_followed_characters` or `list_followed_users`, with `offset` for pages of 50. Act on the user's follow/unfollow request; do not modify character versions, main selection, status, or artwork. Repeating a follow/unfollow is safe. Never invent IDs or handles.
+The account's raw follow lists are private; character pages can show public follower avatars. Use `list_followed_characters` or `list_followed_users`, with `offset` for pages of 50. Act on the user's follow/unfollow request; do not modify character versions, main selection, status, or artwork. Repeating a follow/unfollow is safe. Never invent IDs or handles.
+
+A character page can show its ten newest current followers using their public profile IDs, names and avatars. Do not describe character following as anonymous; raw follow tables and authentication IDs remain private.
 
 ## Main character and public user profile
+
+Use `update_my_profile` with `full_name` to set a name the user explicitly supplies for PUBLIC display, or `full_name: null` to remove it. Never copy a private account name or infer a real name without that request. `get_my_profile` returns the saved name. Full names appear on creator profiles and avatar tooltips; this does not change the handle or character versions.
+
 
 Use `get_my_profile` to read the user's public profile URL and main character. Their first created ettu is selected automatically. On a request to choose a different main, resolve the character with `list_characters` and call `set_main_character` with its `id`. Only the user's own characters can be selected, across either universe. This changes profile selection only: do not call `update_character`, create an interview, or queue generation. An explicit request to make an identified character the main already authorizes this selection.
 
