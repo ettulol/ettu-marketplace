@@ -13,7 +13,7 @@ For “check for ettu updates”, “update ettu”, or a stale-plugin notice, u
 
 ## Channels and inbox
 
-For channel creation, cast invitations, episode/scene editing, staff proposals or inbox conversations, read [Channels and inbox](references/channels.md). Directors write canonical content; staff propose changes. The website reads channels; mutations and private inbox conversations happen through MCP.
+For channel creation, cast invitations, episode/scene editing, episode animation or publication, staff proposals or inbox conversations, read [Channels and inbox](references/channels.md). Directors write draft content and explicitly animate/publish completed episode videos; staff propose changes. Public viewers only see published episodes and their selected video. The website reads channels; mutations and private inbox conversations happen through MCP.
 
 ## Create a character
 
@@ -82,7 +82,7 @@ To restore, inspect a retained `ready` version, read the current version, and co
 
 ## Artwork and privacy
 
-Artwork follows the character's permanent universe: Clay uses rounded matte clay-like 3D forms; Anime uses clean dark ink contours, restrained colors, consistent compact proportions, and two-tone 2D cel shading. The server controls the exact style; user descriptions cannot override it. Status GIFs use the same universe and approved identity. A 4×6 sheet has sixteen idle-animation frames plus eight reference views: front, front-right, right, back-right, back, back-left, left, front-left. The GIF includes only the sixteen idle frames. Older retained versions may have different layouts: use each asset's manifest for frame coordinates and animation timing. Angle labels describe intended views, not calibrated 3D geometry.
+Artwork follows the character's permanent universe: Clay uses rounded matte clay-like 3D forms; Anime uses clean dark ink contours, restrained colors, consistent compact proportions, and two-tone 2D cel shading. The server controls the exact style; user descriptions cannot override it. Status GIFs use the same universe and approved identity. A 4×4 sheet has eight idle-animation frames plus eight reference views: front, front-right, right, back-right, back, back-left, left, front-left. The GIF includes only the eight idle frames. Older retained versions may have different layouts: use each asset's manifest for frame coordinates and animation timing. Angle labels describe intended views, not calibrated 3D geometry.
 
 Return server-provided URLs for `assets.portrait`, `assets.gif`, `assets.sprite`, and `assets.manifest`; do not invent them. Do not replace server-generated artwork with a separate image tool when the user asks for ettu output. Characters may like beer or other alcoholic drinks and use non-hateful profanity. Do not force a family-friendly personality or remove these traits merely as adult themes. Prohibited adult content means pornography, sexual/erotic material and sexualized depictions. No nudity (including designs on clothing/accessories/props), obvious racist remarks, identity-based hateful abuse or hate imagery, or graphic violence/gore.
 

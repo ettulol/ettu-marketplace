@@ -1,7 +1,7 @@
 {
   "name": "ettu",
-  "version": "0.9.0",
-  "description": "Create ettu characters and story channels, manage your public profile, and check for plugin updates.",
+  "version": "0.10.0",
+  "description": "Create ettu characters and story channels, animate and publish episodes, and check for plugin updates.",
   "author": {
     "name": "ettu"
   },
