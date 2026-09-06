@@ -14,8 +14,12 @@ Source development currently uses localhost. Public use requires a hosted endpoi
 
 Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison; older servers are supported through a direct metadata lookup. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.10.2. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
+The bundle version is 0.11.0. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Episode videos
 
 Ask your AI to animate an episode after adding scenes and published cast. The director can request a new video, inspect generation progress and previous versions, and publish a selected completed video. Episodes start as drafts; publishing a channel does not expose unfinished episodes. The channel page provides episode navigation, playback and team-only video history. See [episode video workflows](skills/ettu/references/channels.md#animate-and-publish-episodes).
+
+## Character drafts and publication
+
+Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see a placeholder, generation progress, private artwork preview or failure reason. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.

@@ -1,11 +1,21 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.10.2",
-  "minimum_supported_version": "0.8.0",
+  "version": "0.11.0",
+  "minimum_supported_version": "0.11.0",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.11.0",
+      "date": "2026-09-06",
+      "changes": [
+        "Character creation, updates and restores now remain private drafts, including after artwork is ready. Use publish_character to explicitly release the latest ready version.",
+        "Owner reads and signed-in draft pages show placeholders, generation progress, private preview links and creator-only failure reasons.",
+        "Only published characters can join channels. Pending or failed updates preserve the previously published character.",
+        "Channel property updates, including renaming, remain director-only. Older bundles need this workflow update because artwork readiness no longer publishes characters."
+      ]
+    },
     {
       "version": "0.10.2",
       "date": "2026-09-06",
@@ -20,7 +30,7 @@
       "date": "2026-09-06",
       "changes": [
         "Added episode-writing guidance to preserve location and scenery until an explicitly written change.",
-        "Direct dialogue and delivery from each character’s published personality and voice description.",
+        "Direct dialogue and delivery from each character\u2019s published personality and voice description.",
         "Plan connected scene boundaries, complete dialogue and gestures, and consistent ambient sound; review continuity after reordering scenes."
       ]
     },
