@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "minimum_supported_version": "0.8.0",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.10.2",
+      "date": "2026-09-06",
+      "changes": [
+        "The AI harness reviews scene clarity using the episode and preceding scenes before saving; inherited settings need not be repeated.",
+        "Vague scenes receive focused guidance and a concrete suggestion, with clarification only for unresolved meaningful choices.",
+        "Scene tools keep their existing description input; this guidance adds no server-side vagueness validator or new required fields."
+      ]
+    },
     {
       "version": "0.10.1",
       "date": "2026-09-06",

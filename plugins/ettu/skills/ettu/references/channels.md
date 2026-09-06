@@ -20,6 +20,18 @@ Use `create_episode_scene` / `update_episode_scene` with `episode`, `title`, `de
 
 `delete_channel_episode` permanently removes the episode and its scenes; `delete_episode_scene` removes one scene. Both require current `expected_version`. Use only for requested deletion. Deleting an episode removes its video-history records as well; do not use deletion as a generation retry.
 
+## Help clarify a scene before saving
+
+This is a conversation workflow in the AI harness before `create_episode_scene` (and when revising through `update_episode_scene`). The MCP still accepts the existing prose `description` and normal scene arguments; it does not score vagueness or require structured context fields.
+
+Read `get_channel_episode` first. Evaluate the proposed description together with the episode description and **all scenes before its intended position**, in ascending story order. For an appended scene, these are all existing scenes; for an insertion or move, use only earlier scenes for inherited setting and action state. Read the following scene to check the outgoing transition, not to assume its future location has already been reached. An intentional location change remains in force for later scenes until another explicit change.
+
+A short scene is sufficient when context identifies the actor, action and meaningful result or reaction. Do not require a repeated location, lighting paragraph, voice description or camera plan in every scene. For example, after Moss is established at a café table with a mug, “Moss takes a sip, winces, and sets the mug down” is ready without restating the café. Preserve the user's concise wording when it already works.
+
+If the combined context still leaves a meaningful ambiguity, explain the specific gap and offer a concrete improvement rather than a generic “add more detail.” For “Moss reacts” with no clear reaction in context, say what is missing and suggest a sentence such as “Moss freezes with the mug halfway to his mouth, then laughs.” Ask one focused question only if that choice needs the user's input. Reuse earlier answers and respect creative freedom already given: when the user asked you to invent the action, write a grounded beat and proceed within that scope. Do not silently invent a new location, character, or plot outcome beyond that latitude. Do not create a mandatory interview or request another confirmation when the scene is clear and saving it is already authorized.
+
+If earlier scenes cannot be read, explain that context is unavailable; do not claim that they lack a setting or fabricate their contents. Once meaningful ambiguity is resolved, call the normal scene tool with the resulting description. Inherited context need not be copied into that field. Resolve actual cast UUID arguments from the channel separately; prose context never authorizes adding new cast members. Explain any actual tool error accurately, without describing this harness advice as server validation or rejection.
+
 ## Write a continuous episode
 
 Before writing, read the ordered scenes and the cast's available published profiles/definitions. Use story order (ascending scene position) even when Studio displays newest scenes first. Keep these details in the existing episode/scene descriptions; no extra API fields are required.
