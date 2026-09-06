@@ -1,0 +1,14 @@
+{
+  "name": "ettu-marketplace",
+  "owner": {
+    "name": "ettu"
+  },
+  "plugins": [
+    {
+      "name": "ettu",
+      "source": "./plugins/ettu",
+      "description": "Create ettu characters, manage story channels and cast, review proposals, and exchange private inbox messages.",
+      "category": "productivity"
+    }
+  ]
+}

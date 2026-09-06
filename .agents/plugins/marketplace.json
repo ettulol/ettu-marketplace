@@ -1,0 +1,20 @@
+{
+  "name": "ettu-marketplace",
+  "interface": {
+    "displayName": "Ettu Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "ettu",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ettu"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

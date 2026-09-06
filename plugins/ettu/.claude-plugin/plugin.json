@@ -1,0 +1,10 @@
+{
+  "name": "ettu",
+  "version": "0.8.0",
+  "description": "Create ettu characters, manage story channels and cast, review proposals, and exchange private inbox messages.",
+  "author": {
+    "name": "ettu"
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ettu",
+  "version": "0.8.0",
+  "description": "Create ettu characters, manage story channels and cast, review proposals, and exchange private inbox messages.",
+  "author": {
+    "name": "ettu"
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ettu",
+    "shortDescription": "Create characters with personality and animated sprites",
+    "longDescription": "Create and manage ettu characters and their story channels. Includes animated artwork, handles, follows, cast invitations, episodes, scenes, staff proposals and private conversations through authenticated MCP.",
+    "developerName": "ettu",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "brandColor": "#FFDF00",
+    "defaultPrompt": [
+      "Help me create a character on ettu.",
+      "Show my ettu characters.",
+      "Show my character's version history."
+    ]
+  }
+}
