@@ -13,7 +13,7 @@ For “check for ettu updates”, “update ettu”, or a stale-plugin notice, u
 
 ## Channels and inbox
 
-For channel creation, cast invitations, episode/scene editing, episode animation or publication, staff proposals or inbox conversations, read [Channels and inbox](references/channels.md). Directors write draft content and explicitly animate/publish completed episode videos; staff propose changes. Public viewers only see published episodes and their selected video. The website reads channels; mutations and private inbox conversations happen through MCP.
+For channel creation, cast invitations, episode/scene editing, episode animation or publication, staff proposals or inbox conversations, read [Channels and inbox](references/channels.md). The reference includes required setting, voice and scene-transition guidance. Directors write draft content and explicitly animate/publish completed episode videos; staff propose changes. Public viewers only see published episodes and their selected video. The website reads channels; mutations and private inbox conversations happen through MCP.
 
 ## Create a character
 

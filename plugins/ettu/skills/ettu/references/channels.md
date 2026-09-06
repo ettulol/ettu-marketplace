@@ -20,6 +20,18 @@ Use `create_episode_scene` / `update_episode_scene` with `episode`, `title`, `de
 
 `delete_channel_episode` permanently removes the episode and its scenes; `delete_episode_scene` removes one scene. Both require current `expected_version`. Use only for requested deletion. Deleting an episode removes its video-history records as well; do not use deletion as a generation retry.
 
+## Write a continuous episode
+
+Before writing, read the ordered scenes and the cast's available published profiles/definitions. Use story order (ascending scene position) even when Studio displays newest scenes first. Keep these details in the existing episode/scene descriptions; no extra API fields are required.
+
+- Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes inherit the most recently established setting. A new scene number, camera angle or close-up does not move the story. State intentional changes explicitly, for example “Location change: outside the same café, moments later.” After a change, subsequent scenes inherit the new setting.
+- Ground each character's dialogue, reactions and emotional delivery in their published personality. Always use their saved `voice` description for pitch, texture, tone, pace and accent when supplied, and preserve that vocal identity across scenes. Do not write everyone as a generic narrator or derive an accent from appearance. If an older character has no voice description and it matters to the requested dialogue, ask for direction; do not claim a voice was saved or edit their definition without authorization. Silent scenes can stay silent.
+- Give each scene one achievable action beat with an opening state and a clear ending. Carry props, character positions, eyelines, movement direction and lighting forward. For example, if scene 1 ends with Moss setting a mug on the left side of the table, scene 2 opens in that same café with the mug there; it does not reset the drink or furniture.
+- Plan connected cuts: match movement or cut after an action settles, keep dialogue short enough for the selected duration, and leave a brief natural lead-in and tail. Never end a clip halfway through a word or essential gesture. Keep ambient sound and perceived voice level consistent within a setting; describe a motivated transition when the location or time changes. Avoid restarting music or adding a fade/black frame to every scene.
+- After inserting, reordering or revising scenes, review both neighboring boundaries and later setting inheritance. Preserve deliberate setting changes. Ask for a longer supported clip duration or split an overloaded action beat when needed, within the user's requested generation scope.
+
+The renderer receives preceding scene descriptions and the next scene's description as context. It also reuses the preceding stored opening frame as a scenery reference when available; that image is not the previous clip's ending pose. Voice and transition instructions guide generation but do not guarantee identical vocal timbre or seamless edits from independently generated clips. Preview a completed render before publication and report visible or audible discontinuities honestly. Do not initiate an unrequested paid retry.
+
 ## Animate and publish episodes
 
 1. Read `get_channel` and `get_channel_episode`. Only the director can animate or publish. Staff can inspect drafts/render history and send story proposals; viewers see only published episodes and their selected video.
