@@ -1,0 +1,7 @@
+interface:
+  display_name: "ettu updates"
+  short_description: "Check for ettu plugin updates and release notes"
+  icon_small: "./assets/ettu-icon.png"
+  icon_large: "./assets/ettu-icon.png"
+  brand_color: "#FFDF00"
+  default_prompt: "Use $ettu-update to check for available updates."

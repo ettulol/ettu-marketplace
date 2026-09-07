@@ -1,68 +1,22 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.12.0",
-  "minimum_supported_version": "0.11.0",
+  "version": "0.12.1",
+  "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
     {
-      "version": "0.12.0",
-      "released_at": "2026-09-06",
-      "changes": [
-        "Connect to the production MCP at https://ettu.lol/mcp. Installation and ChatGPT registration guides now use production URLs; users do not run a local server or supply API keys.",
-        "Character guidance now supports names up to 100 characters and 3\u201350 distinct favorites and hates per list. Retained interests keep their order, new interests append, and character pages show the latest six with an option to expand.",
-        "Add a public snapshot of all 55 MCP tools, exact input schemas, scope requirements and current behavior. Clarify owner-only character reads, complete replacement updates, stale-version handling and safe reconciliation after lost responses.",
-        "Clarify status timestamps and history, published artwork fallback, combined profile/settings access, and Studio versus Channel views. Preserve explicit publication and personality, voice and scene-continuity guidance.",
-        "The update skill explains migration from the old localhost default to production while preserving deliberate custom endpoints and registered ChatGPT connections. The minimum supported bundle stays at 0.11.0 because this release does not remove MCP operations."
-      ]
-    },
-    {
-      "version": "0.11.0",
+      "version": "0.12.1",
       "date": "2026-09-06",
       "changes": [
-        "Character creation, updates and restores now remain private drafts, including after artwork is ready. Use publish_character to explicitly release the latest ready version.",
-        "Owner reads and signed-in draft pages show placeholders, generation progress, private preview links and creator-only failure reasons.",
-        "Only published characters can join channels. Pending or failed updates preserve the previously published character.",
-        "Channel property updates, including renaming, remain director-only. Older bundles need this workflow update because artwork readiness no longer publishes characters."
-      ]
-    },
-    {
-      "version": "0.10.2",
-      "date": "2026-09-06",
-      "changes": [
-        "The AI harness reviews scene clarity using the episode and preceding scenes before saving; inherited settings need not be repeated.",
-        "Vague scenes receive focused guidance and a concrete suggestion, with clarification only for unresolved meaningful choices.",
-        "Scene tools keep their existing description input; this guidance adds no server-side vagueness validator or new required fields."
-      ]
-    },
-    {
-      "version": "0.10.1",
-      "date": "2026-09-06",
-      "changes": [
-        "Added episode-writing guidance to preserve location and scenery until an explicitly written change.",
-        "Direct dialogue and delivery from each character\u2019s published personality and voice description.",
-        "Plan connected scene boundaries, complete dialogue and gestures, and consistent ambient sound; review continuity after reordering scenes."
-      ]
-    },
-    {
-      "version": "0.10.0",
-      "date": "2026-09-06",
-      "changes": [
-        "Animate channel episodes with OpenAI video generation, using scene order and published character appearance, personality and voice.",
-        "Inspect queued, generating, assembling, ready and failed video versions, with persistent video storage and playback links.",
-        "Episodes now begin as drafts. Directors explicitly publish a completed stored video; viewers see only published episodes and their selected video.",
-        "The channel player supports episode navigation and team-only video history. The currently documented Sora API retires September 24, 2026."
-      ]
-    },
-    {
-      "version": "0.9.0",
-      "date": "2026-09-06",
-      "changes": [
-        "Added the ettu-update skill and read-only check_ettu_update MCP tool to compare installed and available plugin versions, summarize release notes, and guide updates in Codex, Claude Code, and ChatGPT.",
-        "Bundled release.json so the installed version travels with both skills and the MCP configuration.",
-        "Added guidance for setting or clearing your public full name with update_my_profile.",
-        "Clarified that character followers can appear publicly on character pages; authentication IDs and raw follow lists remain private."
+        "Production ettu plugin for https://ettu.lol/mcp, with OAuth sign-in and installation guidance for Codex, Claude and ChatGPT.",
+        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3–50 distinct items each.",
+        "Live moods and activities with status GIFs generated on first use, plus public profiles, main characters, unique handles and following.",
+        "Story channels with director controls, cast invitations, episodes, scenes, staff proposals and private inbox conversations. Scene guidance preserves scenery, personality, voice and continuity; episode videos are published explicitly.",
+        "The ettu-update skill checks release metadata, explains available changes and guides the host’s plugin update process.",
+        "Yellow ettu dot branding for the plugin and both skills, with self-contained image assets and the public PNG at https://ettu.lol/brand/pwa-512.png.",
+        "Public MCP contract documentation includes all 55 tools, input schemas, permissions and workflow requirements."
       ]
     }
   ]

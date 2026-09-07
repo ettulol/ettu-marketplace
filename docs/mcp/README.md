@@ -6,6 +6,7 @@ This client contract is exported from the ettu application repository. The inven
 
 - Transport: Streamable HTTP at `https://ettu.lol/mcp`. Website: [ettu.lol](https://ettu.lol).
 - Connect through ettu OAuth authorization-code + PKCE. Discovery is under `/.well-known/oauth-authorization-server` and `/.well-known/oauth-protected-resource/mcp` on the MCP origin. Approve the connection with your invited/approved Clerk account. Send the resulting ettu bearer token, not a Clerk session token, to `/mcp`.
+- Initialization metadata advertises the ettu title, website and public yellow icon at `https://ettu.lol/brand/pwa-512.png` (`image/png`, 512×512). Icon display is optional and controlled by the host; the image requires no bearer token.
 - Identity comes from the authenticated connection. Tool arguments never select the acting owner/director. Public user IDs mean profile UUIDs, not Clerk IDs or private account UUIDs.
 - Current scopes are `characters:read` and `characters:write`. Despite their names, they also cover profiles, follows, channels, episode videos and inbox operations. Write does not implicitly grant read; typical authoring sessions need both. The HTTP OAuth layer validates grants before discovery/calls. Baseline tools are still authenticated over HTTP.
 - The server registers only the tools allowed by the granted scopes. Database ownership, director/staff roles, invitation acceptance and publication rules further constrain each call. Annotations are client hints, not access controls.

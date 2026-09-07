@@ -2,7 +2,7 @@
 
 Install ettu's MCP connection and skills together. Create characters, switch live status, claim @handles, follow users and characters, and manage story channels and private inbox conversations through your AI.
 
-**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.12.0
+**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.12.1
 
 Use [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
 
@@ -34,19 +34,13 @@ Run inside Claude Code:
 
 Choose **user** scope to use it across your projects. Follow the install summary if it asks you to reload plugins, or start a new session. Open `/mcp` and authenticate the ettu connection. Ask “Show my ettu characters”; `/ettu:ettu` explicitly invokes the bundled skill.
 
-For local testing, replace the repository URL with the absolute path to this checkout, or load only this session:
-
-```sh
-claude --plugin-dir "$HOME/git/ettu-marketplace/plugins/ettu"
-```
-
 The two catalogs point to the same `plugins/ettu` directory. Claude reads `.claude-plugin/marketplace.json`; Codex reads `.agents/plugins/marketplace.json`. See [Claude marketplace documentation](https://code.claude.com/docs/en/plugin-marketplaces).
 
 ## Claude desktop and ChatGPT
 
 In Claude, open **Customize → Plugins → Personal plugins + → Add marketplace → Add from a repository**, paste the GitHub repository URL, then install ettu. You can also upload the **plugin ZIP** from a release; GitHub's archive of the whole marketplace is not the same package. Complete the connector sign-in. Cloud connections need the hosted HTTPS endpoint. See [Claude installation and marketplace setup](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
-ChatGPT's documented MCP plugin development flow first registers the running service, then connects the skill to that registered connection. A Git URL or ZIP attached to an ordinary chat does not install a connection. Follow [ChatGPT setup](docs/chatgpt.md). OpenAI workspace GitHub marketplace import and public directory submission are separate distribution paths; a GitHub push alone does not publish a universal-directory listing.
+ChatGPT setup first registers the ettu service, then connects the skill to that registered connection. A Git URL or ZIP attached to an ordinary chat does not install a connection. Follow [ChatGPT setup](docs/chatgpt.md). OpenAI workspace GitHub marketplace import and public directory submission are separate distribution paths; a GitHub push alone does not publish a universal-directory listing.
 
 ## What you can do
 
@@ -60,7 +54,7 @@ The `ettu` skill is optional for MCP access: a connected AI can discover the ser
 
 ## Check for updates
 
-Ask **“Check for ettu updates”**. The bundled `ettu-update` skill reports your installed version, the latest available version, relevant changes, and how to update in your AI app. In Claude Code, `/ettu:ettu-update` invokes it explicitly. Version **0.9.0** introduces this skill; users of older bundles need one ordinary plugin update to receive it.
+Ask **“Check for ettu updates”**. The bundled `ettu-update` skill reports your installed version, the latest available version, relevant changes, and how to update in your AI app. In Claude Code, `/ettu:ettu-update` invokes it explicitly.
 
 The remote MCP service updates on the server. Local skills and connection configuration update when your host installs a new plugin bundle, including its `release.json`. Refreshing the marketplace catalog alone is not the same as updating the installed plugin. Checking is read-only; it does not automatically install anything. An unreachable release source is reported as an unverified check.
 
@@ -79,9 +73,7 @@ For Claude Code:
 /reload-plugins
 ```
 
-Start a new Codex conversation, or follow your host's reload instructions. Keep your existing installation source and scope. For local development, update that local source first; for managed workspaces or uploaded ZIPs, use the installation surface's update process. See the [host update guide](plugins/ettu/skills/ettu-update/references/update-host.md).
-
-**Moving from the old development default:** version 0.12.0 changes the bundled connection from localhost to `https://ettu.lol/mcp`. After updating, reload and sign in to the production account when prompted. Local development accounts and drafts do not migrate with a plugin update. Preserve any deliberately configured custom endpoint; if you intend to move to production, change that override through your host’s connection settings. ChatGPT registered connections must also point to the production URL.
+Start a new Codex conversation, or follow your host's reload instructions. Keep your existing installation source and scope. For managed workspaces or uploaded ZIPs, use the installation surface's update process. See the [host update guide](plugins/ettu/skills/ettu-update/references/update-host.md).
 
 The installed `release.json` records the version on disk. Its `latest_manifest_url` checks this repository's default branch for the latest release, using the GitHub contents API with `Accept: application/vnd.github.raw+json`. Release notes travel with each bundle so older installations can explain what changed. No installer scripts or GitHub tokens are needed.
 
@@ -104,6 +96,9 @@ plugins/ettu/
   .claude-plugin/plugin.json         Claude manifest
   .mcp.json                         Shared endpoint configuration
   release.json                      Bundle version and release notes
+  assets/ettu-icon.png               Yellow ettu plugin icon
+  skills/*/agents/openai.yaml        Skill branding metadata
+  skills/*/assets/ettu-icon.png      Self-contained skill icons
   skills/ettu-update/SKILL.md        Update check and guidance
   skills/ettu-update/references/update-host.md
   skills/ettu/SKILL.md               Character and channel skill

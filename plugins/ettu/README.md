@@ -12,11 +12,9 @@ The bundled endpoint is `https://ettu.lol/mcp`; the website is [ettu.lol](https:
 
 ## Updates
 
-Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison; older servers are supported through a direct metadata lookup. Network or permission failures are reported as unverified checks.
+Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison. If the tool is unavailable, the skill checks the public release metadata directly. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.12.0. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
-
-Upgrading from the old localhost default changes the bundled connection to production. Reload and authenticate to your production account when prompted; local accounts and drafts do not migrate with the bundle. Deliberate custom endpoint overrides and ChatGPT registered connections need their host’s connection settings; see the update guide before switching them.
+The bundle version is 0.12.1. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Character limits
 
@@ -29,3 +27,7 @@ Ask your AI to animate an episode after adding scenes and published cast. The di
 ## Character drafts and publication
 
 Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see a placeholder, generation progress, private artwork preview or failure reason. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.
+
+## Branding
+
+The plugin and both skills include the yellow ettu dot icon. The public image is [ettu icon](https://ettu.lol/brand/pwa-512.png); bundled copies load through relative paths without an image request to the website. Keep `assets/` and each skill's `agents/` and `assets/` folders when importing the plugin. Supported hosts use this metadata for branding; actual placement is controlled by the host.

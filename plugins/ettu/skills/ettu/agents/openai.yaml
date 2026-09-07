@@ -1,0 +1,7 @@
+interface:
+  display_name: "ettu"
+  short_description: "Create characters and stories with ettu"
+  icon_small: "./assets/ettu-icon.png"
+  icon_large: "./assets/ettu-icon.png"
+  brand_color: "#FFDF00"
+  default_prompt: "Use $ettu to show my characters."
