@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.0",
+      "date": "2026-09-07",
+      "changes": [
+        "Episode videos use Google Veo 3.1 with 720p, 16:9 widescreen output. Choose 4, 6 or 8 seconds per scene (default 8); OpenAI generates the opening frames.",
+        "Updated episode guidance and the public MCP contract cover supported durations, generation progress and explicit publication. Provider credentials remain on the Ettu server; the MCP connection and OAuth sign-in are unchanged."
+      ]
+    },
     {
       "version": "0.12.1",
       "date": "2026-09-06",

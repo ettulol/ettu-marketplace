@@ -19,7 +19,7 @@
   "tools": [
     {
       "name": "animate_channel_episode",
-      "description": "Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid OpenAI video generation (one clip per scene) and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failures do not replace previous videos. The configured Sora API is scheduled to retire September 24, 2026. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.",
+      "description": "Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with OpenAI opening-frame generation, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failures do not replace previous videos. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -47,11 +47,11 @@
               },
               {
                 "type": "number",
-                "const": 8
+                "const": 6
               },
               {
                 "type": "number",
-                "const": 12
+                "const": 8
               }
             ]
           }
@@ -927,7 +927,7 @@
     },
     {
       "name": "list_episode_videos",
-      "description": "Read episode video generation status, progress, useful failure messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Completed videos have short-lived playback URLs. Read-only; does not retry a failed render or change publication.",
+      "description": "Read episode video generation status, progress, useful failure messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1585,7 +1585,7 @@
     },
     {
       "name": "set_episode_publication",
-      "description": "Director only. Set an episode to draft or published. Publishing requires a completed video stored for this episode. Specify video to select a version; otherwise retain its previous selection or use the newest completed render. Only published episodes and their selected video are visible to channel viewers. Return to draft before editing story/scenes. Generation never publishes automatically; publishing a new render is an explicit action.",
+      "description": "Director only. Set an episode to draft or published. Publishing requires a completed video stored for this episode. Specify video to select a version; otherwise retain its previous selection or use the newest completed render. Only published episodes and their selected video are visible to channel viewers. Return to draft before editing story/scenes. Generation never publishes automatically; publishing a new render is an explicit action. If media_withdrawal_pending is true, public-copy removal and CDN purge are still finishing; read the episode again before reporting that removal is complete.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1828,7 +1828,7 @@
     },
     {
       "name": "update_channel",
-      "description": "Director only: rename a channel or update its description and private/public visibility. Read get_channel first for the current version and properties. To rename, supply the new name and preserve the existing description and visibility; this tool replaces all three properties. Staff and viewers cannot update channel properties. Public makes the channel and cast visible to everyone; only published episodes, their scenes and selected completed video become viewer-accessible. Drafts and render history stay with the channel team. Obtain authorization before publishing.",
+      "description": "Director only: rename a channel or update its description and private/public visibility. Read get_channel first for the current version and properties. To rename, supply the new name and preserve the existing description and visibility; this tool replaces all three properties. Staff and viewers cannot update channel properties. Public makes the channel and cast visible to everyone; only published episodes, their scenes and selected completed video become viewer-accessible. Drafts and render history stay with the channel team. If media_withdrawal_pending is true, public-copy removal and CDN purge are still finishing; read get_channel again before reporting that the privacy change is complete. Obtain authorization before publishing.",
       "inputSchema": {
         "type": "object",
         "properties": {

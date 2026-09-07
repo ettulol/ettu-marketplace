@@ -5,7 +5,7 @@ description: Create and manage ettu characters, handles, follows, story channels
 
 # Use ettu
 
-The public website is `https://ettu.lol` and this distribution connects to `https://ettu.lol/mcp`. Use the connected ettu MCP tools for account data and mutations. Tool names may have a client-specific namespace; discover them by their names below. If they are unavailable, explain that the ettu connector must be enabled and signed in before account work can proceed. Continue drafting character ideas if useful. Never request an OpenAI key, account password, database credential or access token in chat; authentication belongs in the connector's OAuth sign-in flow.
+The public website is `https://ettu.lol` and this distribution connects to `https://ettu.lol/mcp`. Use the connected ettu MCP tools for account data and mutations. Tool names may have a client-specific namespace; discover them by their names below. If they are unavailable, explain that the ettu connector must be enabled and signed in before account work can proceed. Continue drafting character ideas if useful. Never request a provider API key, account password, database credential or access token in chat; authentication belongs in the connector's OAuth sign-in flow.
 
 ## Read the current contract
 
