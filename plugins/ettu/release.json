@@ -1,11 +1,22 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "minimum_supported_version": "0.11.0",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.12.0",
+      "released_at": "2026-09-06",
+      "changes": [
+        "Connect to the production MCP at https://ettu.lol/mcp. Installation and ChatGPT registration guides now use production URLs; users do not run a local server or supply API keys.",
+        "Character guidance now supports names up to 100 characters and 3\u201350 distinct favorites and hates per list. Retained interests keep their order, new interests append, and character pages show the latest six with an option to expand.",
+        "Add a public snapshot of all 55 MCP tools, exact input schemas, scope requirements and current behavior. Clarify owner-only character reads, complete replacement updates, stale-version handling and safe reconciliation after lost responses.",
+        "Clarify status timestamps and history, published artwork fallback, combined profile/settings access, and Studio versus Channel views. Preserve explicit publication and personality, voice and scene-continuity guidance.",
+        "The update skill explains migration from the old localhost default to production while preserving deliberate custom endpoints and registered ChatGPT connections. The minimum supported bundle stays at 0.11.0 because this release does not remove MCP operations."
+      ]
+    },
     {
       "version": "0.11.0",
       "date": "2026-09-06",

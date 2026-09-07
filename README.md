@@ -2,7 +2,11 @@
 
 Install ettu's MCP connection and skills together. Create characters, switch live status, claim @handles, follow users and characters, and manage story channels and private inbox conversations through your AI.
 
-**Current status:** the source connects to `http://localhost:3001/mcp` for development. The distribution repository is [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace). Before inviting other users, the maintainer must set the actual hosted HTTPS endpoint and publish the release files. Installation downloads configuration and instructions; the ettu backend must run separately.
+**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.12.0
+
+Use [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
+
+Read the [MCP contract](docs/mcp/README.md) for the 55 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
 
 ## Install in Codex
 
@@ -15,16 +19,9 @@ codex plugin add ettu@ettu-marketplace
 
 If Codex asks for a marketplace repository URL, provide the same **repository URL**, then install **ettu** from **ettu-marketplace**. Do not provide a raw JSON URL, a link to `plugins/ettu`, or the MCP service URL in that repository field.
 
-For this local checkout:
-
-```sh
-codex plugin marketplace add ~/git/ettu-marketplace
-codex plugin add ettu@ettu-marketplace
-```
-
 Start a new Codex conversation after installing. Complete ettu OAuth sign-in when prompted. Ask “Show my ettu characters” as a read-only check. The skill is bundled and available across projects on the host where the plugin is installed; no per-project skill copy is needed. Enable it on other hosts separately. Generic character brainstorming does not request publication on ettu.
 
-The installed Codex CLI provides these `plugin marketplace add` and `plugin add` commands. For the plugin browser, open `/plugins`. See [OpenAI plugin usage](https://learn.chatgpt.com/docs/plugins).
+These commands are available in current Codex CLI versions; check `codex plugin --help` if your version differs. For the plugin browser, open `/plugins`. See [OpenAI plugin usage](https://learn.chatgpt.com/docs/plugins).
 
 ## Install in Claude Code
 
@@ -51,6 +48,16 @@ In Claude, open **Customize → Plugins → Personal plugins + → Add marketpla
 
 ChatGPT's documented MCP plugin development flow first registers the running service, then connects the skill to that registered connection. A Git URL or ZIP attached to an ordinary chat does not install a connection. Follow [ChatGPT setup](docs/chatgpt.md). OpenAI workspace GitHub marketplace import and public directory submission are separate distribution paths; a GitHub push alone does not publish a universal-directory listing.
 
+## What you can do
+
+- Create a character in Clay or Anime with a personality, appearance, voice direction, a name of up to 100 characters, and 3–50 favorites and hates each. Universe selection is permanent.
+- Preview private drafts and publish ready artwork explicitly. Private characters appear only to their creator; public discovery shows published characters.
+- Set live moods and activities independently of revisions. Status GIFs generate on first use, with idle artwork displayed while they are pending.
+- Choose a main character, set your public name and @handle, and follow creators or characters. Ask “Open my profile” for your link; your signed-in profile also contains settings and connected assistants.
+- Direct channels, invite published cast, write scenes with inherited setting and consistent voices, then animate and explicitly publish episodes. Studio has the editing overview; Channel has playback and episode navigation.
+
+The `ettu` skill is optional for MCP access: a connected AI can discover the server tools automatically. The bundle adds interview, publication and storytelling guidance plus the `ettu-update` skill.
+
 ## Check for updates
 
 Ask **“Check for ettu updates”**. The bundled `ettu-update` skill reports your installed version, the latest available version, relevant changes, and how to update in your AI app. In Claude Code, `/ettu:ettu-update` invokes it explicitly. Version **0.9.0** introduces this skill; users of older bundles need one ordinary plugin update to receive it.
@@ -74,13 +81,24 @@ For Claude Code:
 
 Start a new Codex conversation, or follow your host's reload instructions. Keep your existing installation source and scope. For local development, update that local source first; for managed workspaces or uploaded ZIPs, use the installation surface's update process. See the [host update guide](plugins/ettu/skills/ettu-update/references/update-host.md).
 
+**Moving from the old development default:** version 0.12.0 changes the bundled connection from localhost to `https://ettu.lol/mcp`. After updating, reload and sign in to the production account when prompted. Local development accounts and drafts do not migrate with a plugin update. Preserve any deliberately configured custom endpoint; if you intend to move to production, change that override through your host’s connection settings. ChatGPT registered connections must also point to the production URL.
+
 The installed `release.json` records the version on disk. Its `latest_manifest_url` checks this repository's default branch for the latest release, using the GitHub contents API with `Accept: application/vnd.github.raw+json`. Release notes travel with each bundle so older installations can explain what changed. No installer scripts or GitHub tokens are needed.
+
+## Connection help
+
+- If ettu requests an invitation, use [the waitlist](https://ettu.lol/waitlist). Requests and invitations are handled by Clerk; joining the waitlist does not grant access yet.
+- For missing tools, enable the ettu connection, finish OAuth sign-in and refresh tools or start a new conversation. Typical authoring needs both read and write permissions.
+- Manage authorized assistants from your signed-in profile; [account](https://ettu.lol/account) redirects there. Revoking a connection requires that assistant to authorize again.
+- If `ettu.lol` cannot resolve or the endpoint is unavailable, the connection cannot finish until the hosted service is reachable. Changing a skill or supplying a personal API key will not fix that.
 
 ## Repository layout
 
 ```text
 .agents/plugins/marketplace.json     Codex catalog
 .claude-plugin/marketplace.json      Claude catalog
+docs/mcp/README.md                  Public MCP contract and tool inventory
+docs/mcp/contract.json              Exact tool schemas and scopes
 plugins/ettu/
   .codex-plugin/plugin.json          Codex manifest
   .claude-plugin/plugin.json         Claude manifest

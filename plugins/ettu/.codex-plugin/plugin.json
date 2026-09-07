@@ -1,9 +1,10 @@
 {
   "name": "ettu",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Create ettu characters and story channels, animate and publish episodes, and check for plugin updates.",
   "author": {
-    "name": "ettu"
+    "name": "ettu",
+    "url": "https://ettu.lol"
   },
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
@@ -22,6 +23,9 @@
       "Help me create a character on ettu.",
       "Show my ettu characters.",
       "Show my character's version history."
-    ]
-  }
+    ],
+    "websiteURL": "https://ettu.lol"
+  },
+  "homepage": "https://ettu.lol",
+  "repository": "https://github.com/ettulol/ettu-marketplace"
 }

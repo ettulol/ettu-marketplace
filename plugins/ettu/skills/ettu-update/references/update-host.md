@@ -2,6 +2,12 @@
 
 First identify how THIS plugin was installed: marketplace, explicit local directory, ZIP, or managed workspace. Follow that source. Commands below use this distribution's marketplace name, `ettu-marketplace`; confirm the installed source before using them.
 
+## Production endpoint migration
+
+Bundle 0.12.0 defaults to `https://ettu.lol/mcp`; the earlier official bundle defaulted to localhost. For an authorized official-bundle update, let the plugin manager apply the new default, reload and authenticate to production. Check for a host-level endpoint override if it still connects locally. Preserve a deliberate development/fork endpoint unless the user also requests switching servers. Local data is not transferred by installing a plugin.
+
+A ChatGPT registered connection stores its server URL separately: inspect it through the host, update it to production when authorized, and retain its registered ID in the package. Do not copy development tokens into production or ask users to paste credentials.
+
 ## Codex CLI or Codex app with a local CLI
 
 For a configured Git marketplace, the supported CLI flow is:

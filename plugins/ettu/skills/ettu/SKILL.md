@@ -5,7 +5,13 @@ description: Create and manage ettu characters, handles, follows, story channels
 
 # Use ettu
 
-Use the connected ettu MCP tools for account data and mutations. Tool names may have a client-specific namespace; discover them by their names below. If they are unavailable, explain that the ettu connector must be enabled and signed in before account work can proceed. Continue drafting character ideas if useful. Never request an OpenAI key, account password, database credential or access token in chat; authentication belongs in the connector's OAuth sign-in flow.
+The public website is `https://ettu.lol` and this distribution connects to `https://ettu.lol/mcp`. Use the connected ettu MCP tools for account data and mutations. Tool names may have a client-specific namespace; discover them by their names below. If they are unavailable, explain that the ettu connector must be enabled and signed in before account work can proceed. Continue drafting character ideas if useful. Never request an OpenAI key, account password, database credential or access token in chat; authentication belongs in the connector's OAuth sign-in flow.
+
+## Read the current contract
+
+Discover tools and follow their live schemas. `get_character` and version reads return the owner’s private records, not a public character lookup. Use `resolve_ettu_handle` for another user or published character by public UUID or @handle; use accessible channel cast for published story context. Never substitute private authentication IDs for public profile UUIDs.
+
+Successful results currently contain serialized JSON in a text block; check `isError` before parsing. Tool errors can be plain text, with no stable application error codes. Stored generation errors are returned as data on read tools. Read/write scopes are separate and typical authoring needs both. Missing tools can mean missing grants or a stale connection; explain the actual failure. The [public MCP contract](https://github.com/ettulol/ettu-marketplace/blob/main/docs/mcp/README.md) lists the current tools and constraints; server discovery takes precedence.
 
 ## Plugin updates
 
@@ -21,6 +27,8 @@ First call `list_universes` and offer its owner-curated options: Clay (tactile 3
 
 Gather the name, personality, at least three distinct favorites, at least three distinct hates, appearance, and voice. Ask: “If your character could speak, what kind of voice would they have?” Offer tone, pitch, texture, speaking pace, or accent as optional prompts. Save the user's description in `voice`; this describes an imagined voice and does not generate audio. Reuse answers already given. Call `prepare_character` with known answers and ask its missing-field questions conversationally. Suggest details when helpful, but do not treat suggestions as the user's answers until accepted.
 
+Use a name of 1–100 characters, personality/appearance/voice of 1–1,200 characters each, and 3–50 favorites plus 3–50 hates. Each interest is 1–120 characters and distinct within its list after trimming and case-insensitive comparison. Optional traits allow at most 20 entries (keys up to 60 characters, values up to 300). Do not stop at three interests when the user wants more. Keep retained interests in their existing order and append additions; the server preserves that order, and the detail page shows the latest six with expandable older items.
+
 Before `create_character`, present the concrete definition and confirm it unless already approved. Creation saves a private draft and queues artwork; it does not publish. Explain that the owner can preview it before explicitly publishing the description and artwork. The interview stays private. A request to create a draft does not authorize publication; an explicit request to create and publish can authorize both steps. Creating and updating queue server-side image generation; installation alone does not authorize those writes.
 
 Call `create_character` with the definition fields at the top level and `interview`: the actual relevant user/assistant messages in chronological order, including confirmation. Preserve wording, exclude unrelated chat, and never fabricate a transcript. Optional `traits` preserve extra character attributes. Follow the live tool schema for limits.
@@ -35,7 +43,7 @@ After queued creation or an update, read `get_character` until it is ready, reje
 
 ## Find and update
 
-Use `list_characters` to resolve names to IDs (pages contain up to 50 records; advance `offset` when necessary). Clarify ambiguous matches. Read `get_character` before editing. Preserve every unchanged definition field, including `voice` and `traits`: `update_character` replaces the whole definition. The returned top-level `universe` is permanent; never put it inside `definition` or attempt to change it. To represent a character in another universe, offer a separate new character with its own confirmed interview. Existing characters belong to Clay. Older characters may have no `voice`; do not invent one or block unrelated edits. Ask the voice question when the user wants to add one.
+Use `list_characters` to resolve names to IDs (pages contain up to 50 records; advance `offset` when necessary). Clarify ambiguous matches. Read `get_character` before editing. Preserve every unchanged definition field, including `voice` and `traits`: `update_character` replaces the whole definition. The returned top-level `universe` is permanent; never put it inside `definition` or attempt to change it. To represent a character in another universe, offer a separate new character with its own confirmed interview. Read the stored universe for existing characters; legacy characters defaulted to Clay. Older characters may have no `voice`; do not invent one or block unrelated edits. Ask the voice question when the user wants to add one.
 
 Show the proposed changes and confirm them unless already explicitly approved. Pass `id`, the fresh `expected_version`, the complete `definition`, and the actual conversation for this edit in `interview`. If the version is stale, re-read and reconcile concurrent changes; never overwrite them blindly.
 
@@ -55,7 +63,7 @@ Use `set_ettu_handle` on the user's request to give their profile or character a
 
 A handle is separate from version history. Changing it releases the old spelling; followers and profile URLs stay attached to the UUID. Draft characters may reserve a handle but remain unavailable to public lookup until published. `get_my_profile`, `get_character`, and `list_characters` report current handles.
 
-Use `set_follow` with `target` set to a public UUID or @handle and `following: true` or `false`, for example `{"target":"@moss","following":true}` or `{"target":"@jonathanrico","following":false}`. User UUIDs are public profile IDs, never private authentication IDs. `resolve_ettu_handle` identifies the target type and UUID when needed; optional `type` disambiguates UUIDs. Do not infer a target from its display name when ambiguous. User and character follows are separate; following a user does not automatically follow all of their characters. The legacy `set_character_follow` still accepts a character UUID.
+Use `set_follow` with `target` set to a public UUID or @handle and `following: true` or `false`, for example `{"target":"@moss","following":true}` or `{"target":"@jonathanrico","following":false}`. User UUIDs are public profile IDs, never private authentication IDs. `resolve_ettu_handle` identifies the target type and UUID when needed; optional `type` disambiguates UUIDs. Do not infer a target from its display name when ambiguous. User and character follows are separate; following a user does not automatically follow all of their characters. Prefer `set_follow` for new calls. The legacy `set_character_follow` also supports UUID unfollow when an already-followed character is no longer publicly resolvable; use it for that compatibility case.
 
 The account's raw follow lists are private; character pages can show public follower avatars. Use `list_followed_characters` or `list_followed_users`, with `offset` for pages of 50. Act on the user's follow/unfollow request; do not modify character versions, main selection, status, or artwork. Repeating a follow/unfollow is safe. Never invent IDs or handles.
 
@@ -68,6 +76,8 @@ Use `update_my_profile` with `full_name` to set a name the user explicitly suppl
 
 Use `get_my_profile` to read the user's public profile URL and main character. Their first created ettu is selected automatically. On a request to choose a different main, resolve the character with `list_characters` and call `set_main_character` with its `id`. Only the user's own characters can be selected, across either universe. This changes profile selection only: do not call `update_character`, create an interview, or queue generation. An explicit request to make an identified character the main already authorizes this selection.
 
+The signed-in owner’s profile also contains settings, connected assistants and their other characters, with private/published indicators. `https://ettu.lol/account` redirects to that signed-in profile; another visitor sees public profile information only. Account access and invitations are managed through Clerk; the MCP cannot approve a waitlist request.
+
 The public user profile shows that character's latest published GIF, including its current status animation, and uses the published portrait for social previews. A selected draft shows a placeholder until its first publication; private drafts and interviews are never exposed. Selection persists across character updates and restores. If the main character is deleted outside MCP, the earliest remaining character becomes main. Return the server-provided profile URL.
 
 ## Live status, separate from versions
@@ -76,7 +86,7 @@ Use `list_character_statuses` to discover the 22 supported activity/mood keys. R
 
 Status is public, separate from the character definition and version history. A character must have published artwork. Do not call `update_character` for a status change, and do not create an interview or revision. Act on an explicit status request or the user's standing authorization for automatic status changes; avoid repeated confirmation inside an already authorized automation. Without that authorization, do not infer permission to change an ettu simply from unrelated user activity.
 
-The status label changes immediately. Its action GIF is generated on first use and cached for the published artwork; until ready, the public display uses that artwork's idle GIF. Call `get_character_status` to inspect `animation_state`, `using_fallback`, and `gif`. A new definition uses matching animations; exact rollback can reuse the earlier artwork's cache. The selected status persists across publication and rollback without becoming historical state.
+The status label changes immediately. Its action GIF is generated on first use and cached for the published artwork; until ready, the public display uses that artwork's idle GIF. Call `get_character_status` to inspect `animation_state`, `using_fallback`, and `gif`. A new definition uses matching animations; exact rollback can reuse the earlier artwork's cache. The selected status persists across publication and rollback; restoring a definition does not restore a past status. Status changes are recorded separately in server history. Read `updated_at` for when the current status changed; there is no MCP tool to list the history. The website shows timing on hover/touch of the status dot and “My creator is re-drawing me” while generation is pending; a glowing dot becomes static blue when ready.
 
 Check the same character while generation is pending; do not repeatedly set status to try to speed it up. Ready animations are reused. Failed/rejected animations keep the idle fallback; use `retry_animation: true` only for an explicitly requested retry. This may incur another server-side generation attempt.
 
