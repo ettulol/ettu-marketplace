@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.2",
+  "version": "0.13.3",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.3",
+      "date": "2026-09-08",
+      "changes": [
+        "Ettu now compiles narrative story scenes into as many or as few focused video shots as needed, preserving story order, cast and explicit dialogue. Users do not need to plan eight-second clips.",
+        "Studio and team MCP reads show the compiled video shot plan, original scene mapping, shot details, planned runtime and per-shot generation progress, including saved plans in video history.",
+        "The remote MCP update is automatic. Updating this bundle refreshes scene-writing guidance and explains that seconds_per_scene is now the duration per compiled shot."
+      ]
+    },
     {
       "version": "0.13.2",
       "date": "2026-09-08",
