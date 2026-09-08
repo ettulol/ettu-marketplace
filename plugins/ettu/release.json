@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.7",
+  "version": "0.13.8",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.8",
+      "date": "2026-09-08",
+      "changes": [
+        "Channel creators can permanently delete a channel from the details page Danger zone, with typed-name confirmation. The delete_channel MCP tool requires explicit approval, the exact channel name and current version.",
+        "Deletion removes episodes, scenes, video history, memberships, invitations and proposals while preserving characters and existing inbox messages. Active videos must be stopped first. Durable receipts make identical retries safe and report pending public-media cleanup.",
+        "Thicker face outlines now match across the website, app icons, downloadable logo assets and plugin icons. Updated guidance and public 61-tool contract."
+      ]
+    },
     {
       "version": "0.13.7",
       "date": "2026-09-08",
@@ -32,7 +41,7 @@
       "changes": [
         "Creator-only frame previews let users inspect retained, content-reviewed character sprites after a universe/style or other quality failure. get_character and get_character_version accept include_generated_frames=true; previewing never approves publication.",
         "set_character_status can redraw even a completed status sprite/GIF with regenerate_animation=true and a UUID request_key. Reuse the key after an uncertain response. Pending generation is reused and the previous approved GIF remains visible through replacement generation or failure.",
-        "Creators can change a character’s status or request a redraw directly on its website profile. Status and artwork replacement remain separate from character versions.",
+        "Creators can change a character\u2019s status or request a redraw directly on its website profile. Status and artwork replacement remain separate from character versions.",
         "Episode director planning and repair decisions now use GPT-5.6 Sol with medium reasoning; artwork reviews keep their separate model. Remote MCP updates server-side; updating this bundle refreshes assistant guidance."
       ]
     },
@@ -85,10 +94,10 @@
       "date": "2026-09-06",
       "changes": [
         "Production ettu plugin for https://ettu.lol/mcp, with OAuth sign-in and installation guidance for Codex, Claude and ChatGPT.",
-        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3–50 distinct items each.",
+        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3\u201350 distinct items each.",
         "Live moods and activities with status GIFs generated on first use, plus public profiles, main characters, unique handles and following.",
         "Story channels with director controls, cast invitations, episodes, scenes, staff proposals and private inbox conversations. Scene guidance preserves scenery, personality, voice and continuity; episode videos are published explicitly.",
-        "The ettu-update skill checks release metadata, explains available changes and guides the host’s plugin update process.",
+        "The ettu-update skill checks release metadata, explains available changes and guides the host\u2019s plugin update process.",
         "Yellow ettu dot branding for the plugin and both skills, with self-contained image assets and the public PNG at https://ettu.lol/brand/pwa-512.png.",
         "Public MCP contract documentation includes all 55 tools, input schemas, permissions and workflow requirements."
       ]
