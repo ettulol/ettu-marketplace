@@ -1,11 +1,21 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.6",
+  "version": "0.13.7",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.7",
+      "date": "2026-09-08",
+      "changes": [
+        "New character and status artwork retains Ettu yellow (#ffdf00) in both universes. Existing published files and exact restores keep their artwork; background changes do not authorize paid regeneration.",
+        "Updated plugin and skill icons use an outlined face with solid features on yellow, matching the website and downloadable brand assets.",
+        "The server uses linear sprite resampling to avoid introducing dark edge fringes. This does not remove lines already drawn in source images or change GIF color limits.",
+        "Refreshed assistant guidance and the public 60-tool contract. Server changes reach existing MCP connections; updating the plugin refreshes instructions and branding."
+      ]
+    },
     {
       "version": "0.13.6",
       "date": "2026-09-08",
