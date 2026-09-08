@@ -1,11 +1,21 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.3",
+  "version": "0.13.4",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.4",
+      "date": "2026-09-08",
+      "changes": [
+        "The episode director now chooses the shortest suitable 4-, 6- or 8-second duration per shot. Auto timing is the default; seconds_per_scene is its ceiling. Explicit fixed timing remains available.",
+        "One targeted correction per started shot can remove an actual prohibited visual element, correct a disallowed line, or repair continuity. Ettu records the limitation, proposed fix, local/forward/full impact and final outcome, and rebuilds affected footage.",
+        "Studio and Channel show real director activity, corrective attempt numbers and immutable plan revisions. The read-only get_episode_video_report tool provides paged activity and optional historical plan/attempt evidence.",
+        "Unknown submissions, account/quota failures and unexplained likeness rejections are not automatically resubmitted. Correction work may incur additional usage; new paid renders still require user authorization. Remote MCP capabilities update server-side; update the plugin for this guidance."
+      ]
+    },
     {
       "version": "0.13.3",
       "date": "2026-09-08",
@@ -45,10 +55,10 @@
       "date": "2026-09-06",
       "changes": [
         "Production ettu plugin for https://ettu.lol/mcp, with OAuth sign-in and installation guidance for Codex, Claude and ChatGPT.",
-        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3\u201350 distinct items each.",
+        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3–50 distinct items each.",
         "Live moods and activities with status GIFs generated on first use, plus public profiles, main characters, unique handles and following.",
         "Story channels with director controls, cast invitations, episodes, scenes, staff proposals and private inbox conversations. Scene guidance preserves scenery, personality, voice and continuity; episode videos are published explicitly.",
-        "The ettu-update skill checks release metadata, explains available changes and guides the host\u2019s plugin update process.",
+        "The ettu-update skill checks release metadata, explains available changes and guides the host’s plugin update process.",
         "Yellow ettu dot branding for the plugin and both skills, with self-contained image assets and the public PNG at https://ettu.lol/brand/pwa-512.png.",
         "Public MCP contract documentation includes all 55 tools, input schemas, permissions and workflow requirements."
       ]
