@@ -18,7 +18,7 @@ Only the channel’s creator/director can delete it. Read `get_channel` for the 
 
 Active queued/generating/assembling videos block deletion. Inspect them with `get_channel_episode` or `list_episode_videos`; stop exact active renders with `cancel_episode_video` only with the user’s authorization. Accepted provider requests can still finish and incur charges. On stale name/version errors, reread and confirm the updated target before proceeding.
 
-The creator sees the equivalent **Danger zone** on the channel details page, with a typed-name confirmation and a separate permanent-delete button. Staff and viewers cannot delete through either interface. After a lost response, repeat the identical confirmed MCP request: a private durable receipt returns `deleted: true` and the original `deleted_at`. If `media_withdrawal_pending` is true, the channel is gone but public video copies and CDN purge are still finishing; say so and repeat the identical request to check completion. Do not claim every public copy is removed until that flag is false.
+The creator sees the equivalent **Settings → Danger zone** on the channel details page, with a typed-name confirmation and a separate permanent-delete button. Staff and viewers cannot delete through either interface. After a lost response, repeat the identical confirmed MCP request: a private durable receipt returns `deleted: true` and the original `deleted_at`. If `media_withdrawal_pending` is true, the channel is gone but public video copies and CDN purge are still finishing; say so and repeat the identical request to check completion. Do not claim every public copy is removed until that flag is false.
 
 ## Episodes and scenes
 
