@@ -1354,7 +1354,7 @@
     },
     {
       "name": "prepare_character",
-      "description": "Start here. Identify missing character answers. This is an advisory completeness check, not final input validation or content approval. Ask conversationally; do not invent answers. Keep the actual user/assistant exchange for the interview field when saving. Ask which permanent universe the character lives in: Clay (tactile 3D) or Anime (crisp 2D cel animation). Both have a 8-frame idle loop and 8 labeled turnaround views covering front, profiles, three-quarter angles and back. Ready artwork stays private until publish_character is explicitly requested.",
+      "description": "Start here. Identify missing character answers. This is an advisory completeness check, not final input validation or content approval. Ask conversationally; do not invent answers. Keep the actual user/assistant exchange for the interview field when saving. Ask which permanent universe the character lives in: Clay (tactile 3D) or Anime (crisp 2D cel animation). New artwork has exactly 8 labeled turnaround views covering front, profiles, three-quarter angles and back. The same 8 images form a rotating preview; there are no duplicate idle frames. Older versions retain their original layout and animation. Ready artwork stays private until publish_character is explicitly requested.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1832,7 +1832,7 @@
     },
     {
       "name": "set_character_status",
-      "description": "Set your published character's public activity/mood without creating a version or changing its definition or interview. Use null to clear it. May be called under the user's standing authorization for automatic status changes. A missing action GIF is queued once; the idle GIF is displayed until it passes review. Reuse ready GIFs by default. On an explicit redraw request, set regenerate_animation=true with a new UUID request_key to replace even a ready animation; reuse that key if the response is uncertain. Pending generation is reused. The previous approved status GIF stays visible until its replacement passes review. retry_animation remains available for failed/rejected animations only; do not combine the two options.",
+      "description": "Set your published character's public activity/mood without creating a version or changing its definition or interview. Use null to clear it. May be called under the user's standing authorization for automatic status changes. A missing action GIF is queued once; the character's default GIF is displayed until it passes review. Reuse ready GIFs by default. On an explicit redraw request, set regenerate_animation=true with a new UUID request_key to replace even a ready animation; reuse that key if the result is uncertain. Pending generation is reused. The previous approved status GIF stays visible until its replacement passes review. retry_animation remains available for failed/rejected animations only; do not combine the two options.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -2260,7 +2260,7 @@
     },
     {
       "name": "update_character",
-      "description": "Create a new private draft of your character’s definition, retaining its URL and previously published version. Universe is permanent. First get_character, preserve unchanged fields, and confirm changes with the user. Each update queues artwork anchored to the currently published portrait, preserving identity while applying requested appearance changes; an identical current recipe may reuse the approved idle animation. Ready artwork stays private until publish_character explicitly releases the latest version. get_character reports creator-only progress and failures.",
+      "description": "Create a new private draft of your character’s definition, retaining its URL and previously published version. Universe is permanent. First get_character, preserve unchanged fields, and confirm changes with the user. Each update queues a fresh eight-view sheet anchored to the currently published portrait, preserving identity while applying requested appearance changes. For unchanged details, use regenerate_character with the selected version and a fresh request key. Ready artwork stays private until publish_character explicitly releases the latest version. get_character reports creator-only progress and failures.",
       "inputSchema": {
         "type": "object",
         "properties": {

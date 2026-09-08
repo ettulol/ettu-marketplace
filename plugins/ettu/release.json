@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.14",
+  "version": "0.13.15",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.15",
+      "date": "2026-09-08",
+      "changes": [
+        "New character sprites use one eight-angle sheet and reuse those views for a rotating preview, removing the repeated idle frames. Historical layouts and idle GIF timing remain supported.",
+        "Body-height and ground-line guidance improves scale consistency across front, profile and back views. Gemini references keep their original dimensions to avoid compounded padding and apparent shrinkage.",
+        "Generation still targets #ffdf00, but quality review accepts close yellow shades and small background variations. Exact-color feedback no longer spends an image repair; substantial background defects and visible framing drift remain actionable."
+      ]
+    },
     {
       "version": "0.13.14",
       "date": "2026-09-08",
