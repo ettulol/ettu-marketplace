@@ -31,3 +31,5 @@ Creating, updating or restoring a character leaves a private draft. Open its pro
 ## Branding
 
 The plugin and both skills include the yellow ettu dot icon. The public image is [ettu icon](https://ettu.lol/brand/pwa-512.png); bundled copies load through relative paths without an image request to the website. Keep `assets/` and each skill's `agents/` and `assets/` folders when importing the plugin. Supported hosts use this metadata for branding; actual placement is controlled by the host.
+
+Creator controls: use **Change status** on an owned character’s profile to choose a mood or redraw its sprite/GIF. Assistants use `set_character_status` with `regenerate_animation: true` and a fresh UUID `request_key` for a requested redraw; repeat the same key after an uncertain result. The previous approved GIF stays visible while replacement art generates. Failed character versions also offer private **Review generated frames**; MCP owner reads accept `include_generated_frames: true`. Content review and publication checks still apply.
