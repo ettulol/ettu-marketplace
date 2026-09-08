@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.11",
+  "version": "0.13.12",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.12",
+      "date": "2026-09-08",
+      "changes": [
+        "Restores the solid ettu face and lettering with matching public and packaged plugin icons.",
+        "Documents the signed-in account dropdown, My Profile shortcut from Discover, browser theme preference and separate Clerk sign-out and assistant connection revocation."
+      ]
+    },
     {
       "version": "0.13.11",
       "date": "2026-09-08",
