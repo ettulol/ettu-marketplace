@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.12",
+  "version": "0.13.13",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.13",
+      "date": "2026-09-08",
+      "changes": [
+        "Generate new version in the character Versions tab refreshes ready artwork with unchanged details and current models. MCP regenerate_character now also accepts private, currently published and previously published ready sources.",
+        "The current published portrait anchors identity; each refresh creates a private version and leaves publication unchanged. Durable request recovery prevents duplicate generation after a lost response."
+      ]
+    },
     {
       "version": "0.13.12",
       "date": "2026-09-08",
