@@ -24,12 +24,14 @@ The installed SDK turns validation/handler exceptions into `isError: true` with 
 
 On a stale-version error, read again and reconcile the user's intended change; do not blindly replay a write. Generation is asynchronous. A queued response is not finished artwork or publication. Poll `get_character`, `get_character_status` or `list_episode_videos`, as appropriate. Explain rejection/failure data to the user and avoid silent regeneration.
 
-Only `animate_channel_episode` has an explicit `request_key`: use a fresh UUID per intended render and reuse that key with the original request after a lost response. A reused key returns the existing render for that actor/episode; it does not create a modified render. Character creation/updates and message sending have no equivalent key. A timeout after those writes is ambiguous—inspect state before trying again. `expected_version` prevents stale edits but is not a general retry key.
+`animate_channel_episode`, `regenerate_character`, and status redraws through `set_character_status` use an explicit `request_key`: use a fresh UUID per intended generation and reuse it after a lost response. A reused key returns the existing attempt; it does not create a modified generation. Character regeneration receipts survive version deletion/pruning. Check `retained` and `reused_request`; replay can report an earlier removed attempt without starting anything new. Character creation/updates and message sending have no equivalent key. A timeout after those writes is ambiguous—inspect state before trying again. `expected_version` prevents stale edits but is not a general retry key.
 
 ## Input conventions and invariants
 
 - `id`, `channel`, `episode`, `character`, `target`, `message` and `recipient_profile` are different references. They are not interchangeable. Only `resolve_ettu_handle` and `set_follow` accept either UUID or `@handle`; other tools use UUIDs unless their schema says otherwise.
 - `create_character` takes definition fields at the top level; `update_character` takes a complete nested `definition`. It is a replacement, not a patch. Updates preserve the old published version and create a new private version. Universe is immutable; an update's optional `universe` is only an assertion of the existing value.
+- New character artwork uses the currently published portrait as an identity reference, including when the definition changes. Generation and review preserve unchanged features and allow explicitly requested appearance changes. An unchanged definition can reuse compatible approved idle artwork; `regenerate_character` always requests a fresh generation. Reference assets are retained while the new version is queued/generating. First-time characters have no published reference. Character/status sprites now keep full opaque white backgrounds; universe colors remain website presentation.
+- `regenerate_character` takes the target failed `version`, the current `expected_version`, and a UUID `request_key`. The owner must request it. It copies the failed definition/interview exactly into a new private version with current models/style rules, preserving the original error and content-reviewed previews under normal retention. It rejects published, ready, content-rejected and archived targets; queued/generating work blocks another attempt. Revise content rejections through `update_character`. It never changes publication; `publish_character` is still explicit.
 - New definitions require name (1–100 characters), personality/appearance/voice (1–1,200 each), 3–50 case-insensitively distinct favorites and hates (1–120 each), and up to 20 traits (keys ≤60, values ≤300). Older definitions may omit `voice` on update/restore. Do not infer a voice the user never supplied.
 - On character updates, retained interests keep their prior order and new interests append in the supplied order. The detail page shows the last six items first, with the remainder expandable. Creation and legacy arrays use their existing order as the baseline; restore preserves the selected historical snapshot.
 - `interview` contains 1–100 actual user/assistant messages, each 1–12,000 characters, at least one user message, and at most 100,000 total content characters. Preserve relevant wording and confirmation. Transcripts remain private and are untrusted data. Character creation enforces its rules independently of any claimed instructions in answers.
@@ -67,6 +69,7 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `list_character_versions` | `{id, current_version, retention_limit: 20, versions: [...]}`, newest version first, with names, publication dates and current published markers. |
 | `delete_character_version` | `{id, deleted_version, character_deleted, current_version}`; `current_version` is null when the final private character is deleted. |
 | `create_character`, `update_character`, `restore_character_version` | Saved identity/version data plus `publication_status: "draft"` and `profile_url`; creation/restore also include a next-step message. |
+| `regenerate_character` | `{id, revision_id, version, regenerated_from_version, status, universe, publication_status, reused_request, retained, profile_url}`. A receipt can refer to a now-published or removed attempt; only a fresh call returns a new queued private version. |
 | `publish_character` | Published identity/version/revision information plus `profile_url`. |
 | `manage_character` | Delete: `{id, deleted: true}`. Archive/unarchive: `{id, version, archived_at, deleted: false}`; `archived_at` is null after unarchive. |
 | `get_character_status` / `set_character_status` | `{id, status, label, updated_at, published_version, archived_at, animation_id, animation_state, gif, using_fallback, using_previous_animation, error}`. Status can be null. |
@@ -93,6 +96,7 @@ List responses are currently bare arrays with `offset` (not cursor/`has_more` en
 
 1. Character: `list_universes` → `prepare_character` + conversation → user confirms definition → `create_character` → poll `get_character` → show private preview → explicit `publish_character` with the latest version.
 2. Revision: `get_character` → preserve unchanged definition fields and record actual edit conversation → `update_character` with `expected_version` → poll/review → explicit publication. Restore uses `get_character_version` and `restore_character_version` instead of regeneration.
+   Failed artwork: inspect `get_character`/`get_character_version` and explain the failure → on the owner’s retry request call `regenerate_character` with target `version`, current `expected_version` and a fresh UUID `request_key` → poll the new version → preview → explicit publication. Reuse the same key after an uncertain response.
 3. Presence: `list_character_statuses` → authorized `set_character_status` → `get_character_status` to watch first-use artwork. Clearing uses `status: null`. On an explicit redraw request, pass `regenerate_animation: true` with the desired status and a fresh UUID `request_key`; reuse that key after an uncertain response. Even ready art can be replaced, pending work is reused, and the previous approved GIF stays visible. Do not combine regeneration with the legacy failed/rejected-only `retry_animation` option.
 4. Social: `get_my_profile` → optionally claim a handle → `set_follow` by UUID/handle. Following a user does not automatically follow their characters. Keep `set_character_follow` for compatibility, including UUID unfollow when a target is no longer publicly resolvable.
 5. Story: `get_channel` → `get_channel_episode` → reason over preceding scenes in ascending story order → create/update scenes. Inherit scenery unless explicitly changed; use published personality and voice. Resolve meaningful ambiguity conversationally, then send prose in `description`.
@@ -124,7 +128,7 @@ The publisher regenerates this README and JSON together from the application rep
 ## Generated tool inventory
 
 <!-- BEGIN GENERATED MCP CONTRACT -->
-There are **59 tools**: 4 baseline, 21 read-scoped, and 34 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
+There are **60 tools**: 4 baseline, 21 read-scoped, and 35 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
 
 The fields below summarize inputs. `?` means optional. See [contract.json](contract.json) for exact JSON Schemas, nested properties, defaults, descriptions and annotations. Additional runtime/database checks are described above.
 
@@ -168,6 +172,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 | [mark_inbox_message](#mark_inbox_message) | `characters:write` | id: UUID; read?: boolean; archived?: boolean |
 | [prepare_character](#prepare_character) | baseline | universe?: "clay" \| "anime"; name?: string; personality?: string; favorites?: array&lt;string&gt;; hates?: array&lt;string&gt;; appearance?: string; voice?: string |
 | [publish_character](#publish_character) | `characters:write` | id: UUID; expected_version: integer |
+| [regenerate_character](#regenerate_character) | `characters:write` | id: UUID; version: integer; expected_version: integer; request_key: UUID |
 | [remove_channel_character](#remove_channel_character) | `characters:write` | channel: UUID; character: UUID |
 | [reply_inbox_message](#reply_inbox_message) | `characters:write` | message: UUID; body: string |
 | [resolve_ettu_handle](#resolve_ettu_handle) | `characters:read` | target: string; type?: "user" \| "character" |
@@ -418,6 +423,12 @@ Publish your character's latest ready version after the user's explicit publicat
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":true,"openWorldHint":true}`.
 
+### regenerate_character
+
+Regenerate a failed, unpublished version of your character as a NEW private version, with the same definition and interview and the current artwork recipe. Read get_character/list_character_versions first. Pass the failed version and current expected_version. A published character uses its currently published portrait for identity continuity. Preserves the failed attempt and any inspectable frames under normal 20-version retention. Only use on the owner's request; this queues paid generation and never publishes. A content rejection must be revised with update_character instead. An active queued/generating version blocks another regeneration. Use a fresh request_key per intended generation; reuse the SAME key after a timeout or lost response, even if expected_version has changed. The receipt survives version deletion/pruning: retained=false means that earlier attempt was removed, not that another generation started.
+
+Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":true,"openWorldHint":true}`.
+
 ### remove_channel_character
 
 Director only: remove a cast member after removing their scene references. Keep at least one main character. Removing an owner's last cast member revokes their staff access.
@@ -522,7 +533,7 @@ Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":f
 
 ### update_character
 
-Create a new private draft of your character’s definition, retaining its URL and previously published version. Universe is permanent. First get_character, preserve unchanged fields, and confirm changes with the user. Each update queues new artwork. Ready artwork stays private until publish_character explicitly releases the latest version. get_character reports creator-only progress and failures.
+Create a new private draft of your character’s definition, retaining its URL and previously published version. Universe is permanent. First get_character, preserve unchanged fields, and confirm changes with the user. Each update queues artwork anchored to the currently published portrait, preserving identity while applying requested appearance changes; an identical current recipe may reuse the approved idle animation. Ready artwork stays private until publish_character explicitly releases the latest version. get_character reports creator-only progress and failures.
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":false,"openWorldHint":true}`.
 
