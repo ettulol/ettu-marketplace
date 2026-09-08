@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.13",
+  "version": "0.13.14",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.14",
+      "date": "2026-09-08",
+      "changes": [
+        "Regenerate character retries a failed unpublished version under the same version number, with a fresh generation attempt and unchanged details. Ready artwork still creates a new private version.",
+        "MCP uses expected_revision_id to reject stale attempts. Durable receipts identify superseded failures without starting another job; previous attempts and retained reviewed frames remain inspectable through the website and get_character_version."
+      ]
+    },
     {
       "version": "0.13.13",
       "date": "2026-09-08",
