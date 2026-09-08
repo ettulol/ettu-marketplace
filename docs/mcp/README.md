@@ -1,10 +1,10 @@
 # ettu MCP contract
 
-This is the current client contract, with an inventory generated from the real MCP server's `tools/list` response. Proposed changes are separate in [the review](review.md); they are **not implemented APIs**. Exact advertised input schemas, descriptions, annotations, server identity and instructions are in [contract.json](contract.json).
+This client contract is exported from the ettu application repository. The inventory comes from real MCP `tools/list` discovery; [contract.json](contract.json) contains the exact input schemas, descriptions, annotations and scope requirements. This is a source snapshot, not proof of a deployed server version. Discover tools on your connected server before calling them.
 
 ## Connection and authorization
 
-- Transport: Streamable HTTP. Public deployment target: `https://ettu.lol/mcp`. The current development tunnel is `https://rico-dev.ettu.lol/mcp`; direct local development defaults to `http://localhost:3001/mcp`. Configure `MCP_URL` and `APP_URL` for the installation; the public target does not imply a deployed service.
+- Transport: Streamable HTTP at `https://ettu.lol/mcp`. Website: [ettu.lol](https://ettu.lol).
 - Connect through ettu OAuth authorization-code + PKCE. Discovery is under `/.well-known/oauth-authorization-server` and `/.well-known/oauth-protected-resource/mcp` on the MCP origin. Approve the connection with your invited/approved Clerk account. Send the resulting ettu bearer token, not a Clerk session token, to `/mcp`.
 - Initialization metadata advertises the ettu title, website and public yellow icon at `https://ettu.lol/brand/pwa-512.png` (`image/png`, 512×512). Icon display is optional and controlled by the host; the image requires no bearer token.
 - Identity comes from the authenticated connection. Tool arguments never select the acting owner/director. Public user IDs mean profile UUIDs, not Clerk IDs or private account UUIDs.
@@ -39,6 +39,7 @@ Only `animate_channel_episode` has an explicit `request_key`: use a fresh UUID p
 - Staff proposals use `proposal.character_ids`, whereas direct scene tools use `characters`. Proposal requirements depend on `kind` and are also checked in the database. Acceptance may fail on stale versions, invalid cast, or capacity without closing the pending proposal.
 - A channel permanently belongs to one universe and needs 1–5 distinct published main characters. The director manages canonical content; staff submit suggestions. Inviting another owner's character sends an inbox message and requires that owner's acceptance before staff access begins.
 - Character publication and episode publication are separate explicit actions. A ready character remains private until `publish_character`. Restoring a retained ready character creates a new private version without generating artwork. Keep up to 20 snapshots; version numbers increase rather than resetting.
+- `manage_character` requires an explicit owner request and current `expected_version`. Delete only characters that have never been published; revisions/interviews/jobs/handles disappear and artwork enters asynchronous cleanup. Published characters support archive/unarchive: archives stay publicly linked from creator profiles and existing episodes, leave discovery, and cannot be edited, republished, assigned a status or added to a new cast until restored. Lifecycle changes do not create versions. Deleting/archiving the main selects an active fallback, preferring published characters.
 - Setting mood/activity does not create a character version. A first-use status animation can queue paid generation, with idle artwork as fallback; retries are explicit. State/history is independent of definition versions. There is currently no MCP status-history listing tool.
 - Rendering an episode snapshots ordered scenes and published cast, including personality and voice direction, and queues paid clips. It does not publish. Publishing requires a completed stored video; specify `video` for a deliberate selection. Otherwise the prior selection wins, then the newest completed render. Set the episode to draft before changing its story. Viewers see only published episodes and the selected video; team members can inspect drafts and render history.
 - Private artwork/playback links may expire (typically 900 seconds). Fetch fresh URLs with the relevant read tool; do not store them as permanent public URLs. `list_episode_videos` adds `playback_url`; nested videos from `get_channel_episode` do not receive this signing step.
@@ -46,7 +47,7 @@ Only `animate_channel_episode` has an explicit `request_key`: use a fresh UUID p
 
 ## Result shapes by operation
 
-These are semantic summaries, not validated output schemas. SQL-backed objects may include additional fields; callers should tolerate additive fields. See [mcp.ts](../../src/mcp.ts), [channels.ts](../../src/channels.ts), [episode-video-tools.ts](../../src/episode-video-tools.ts) and their RPC definitions in [migrations](../../supabase/migrations).
+These are semantic summaries, not validated output schemas. SQL-backed objects may include additional fields; callers should tolerate additive fields.
 
 | Operations | Successful JSON payload |
 | --- | --- |
@@ -59,12 +60,13 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `list_followed_users` / `list_followed_characters` | Arrays of public profile/character records, newest follows first, at most 50 from `offset`. |
 | `get_my_profile`, `update_my_profile`, `set_main_character` | Profile object including `id`, `full_name`, `handle`, main-character details and `profile_url`. |
 | `set_ettu_handle` | Claimed/generated handle and target identity. Omitting a handle preserves one already assigned. |
-| `list_characters` | Up to 50 owned character summaries from `offset`: identity, universe/version, latest generation status/progress/error, publication status, handle and `profile_url`. |
-| `get_character` | Latest private revision/definition/interview, `id` (character), `revision_id`, generation data, signed assets, publication information and `profile_url`. |
+| `list_characters` | Up to 50 owned character summaries from `offset`: identity, universe/version, latest generation status/progress/error, publication status, `first_published_at`, `archived_at`, handle and `profile_url`. `lifecycle` defaults to `active`; `archived` or `all` includes archives. |
+| `get_character` | Latest private revision/definition/interview, `id` (character), `revision_id`, generation data, signed assets, publication information, `has_been_published`, `archived_at` and `profile_url`. |
 | `get_character_version` | Retained revision details, definition/interview, assets and generation settings; differs from the latest-read envelope. |
 | `list_character_versions` | `{id, current_version, retention_limit: 20, versions: [...]}`, newest version first, with published markers. |
 | `create_character`, `update_character`, `restore_character_version` | Saved identity/version data plus `publication_status: "draft"` and `profile_url`; creation/restore also include a next-step message. |
 | `publish_character` | Published identity/version/revision information plus `profile_url`. |
+| `manage_character` | Delete: `{id, deleted: true}`. Archive/unarchive: `{id, version, archived_at, deleted: false}`; `archived_at` is null after unarchive. |
 | `get_character_status` / `set_character_status` | `{id, status, label, updated_at, published_version, animation_state, gif, using_fallback, error}`. Status can be null. |
 | `list_channels` | Up to 50 accessible channel summaries, newest first, optionally filtered by universe. |
 | `get_channel`, `create_channel`, `update_channel`, `set_channel_character`, `remove_channel_character` | Accessible channel object with caller role, version, cast, episode summaries and team information where permitted. |
@@ -73,6 +75,7 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `create_episode_scene` / `update_episode_scene` | Scene record with UUID, episode, position, title/description, version and `character_ids`. |
 | `delete_channel_episode` / `delete_episode_scene` | `{ok: true}` after successful deletion. |
 | `animate_channel_episode` | Render record/status; the request returns before video generation completes. |
+| `cancel_episode_video` | The exact render record after cancellation, with terminal `cancelled` status and `completed_at`. A ready, failed or previously cancelled version is returned unchanged. Previous publication is retained. A new render needs a fresh request key. |
 | `list_episode_videos` | Up to 50 render records, newest version first; completed stored renders receive short-lived `playback_url`/`playback_expires_in` (null if signing fails). |
 | `invite_channel_character`, `respond_channel_invitation`, `cancel_channel_invitation` | Invitation identity/decision fields; creation includes `message_id`, response includes `channel_id`. |
 | `get_channel_invitation` / `list_channel_invitations` | Accessible invitation context / director's invitation summaries (no offset parameter). |
@@ -108,20 +111,14 @@ Example tool arguments (replace placeholder identifiers with real UUIDs):
 {"name":"update_episode_scene","arguments":{"episode":"00000000-0000-4000-8000-000000000002","id":"00000000-0000-4000-8000-000000000003","expected_version":4,"title":"One more try","description":"Still at the kitchen table, Moss slides the repaired radio toward Jun and waits for a reaction.","characters":["00000000-0000-4000-8000-000000000001"]}}
 ```
 
-## Maintaining this contract
+## Contract updates
 
-Run `npm run mcp:docs` after changing tool registrations, descriptions, schemas or scope gates. Commit the updated README and JSON together. `npm run mcp:check` and the normal unit suite fail if the generated inventory drifts. The check uses real in-memory SDK discovery under baseline, read, write and combined permissions. It reads no `.env`, blocks fetch, invokes no business tools, generates no artwork and needs no running database.
-
-For a marketplace release, run `python3 scripts/sync-plugin-contract.py` to export the public contract to the sibling `ettu-marketplace/docs/mcp/` directory, then `python3 scripts/sync-plugin-contract.py --check` to verify it. The export retains exact tool schemas and client guidance while removing development endpoints and application-only links. `--destination <directory>` supports staging before publication. Keep this maintainer script in the application repository; users install only the public bundle.
-
-The generated section is exact discovery metadata. Maintain the semantic result summaries, database-only invariants, workflows and [review](review.md) when behavior changes; the drift check cannot infer SQL return shapes or certify those handwritten sections. Exported `schema_version` describes the snapshot file format; the current MCP server implementation version is not a separately managed contract release. Plugin releases have their own versions.
-
-MCP supports typed structured results and optional output schemas; adopting those is a proposed improvement, not current behavior. See the [official tool specification](https://modelcontextprotocol.io/specification/2025-11-25/server/tools).
+The publisher regenerates this README and JSON together from the application repository. The installed plugin has its own [release metadata](../../plugins/ettu/release.json); its version differs from the server implementation version. Runtime tools remain authoritative. The marketplace includes documentation and connection skills only; users do not need the application source or its maintainer scripts.
 
 ## Generated tool inventory
 
 <!-- BEGIN GENERATED MCP CONTRACT -->
-There are **55 tools**: 4 baseline, 20 read-scoped, and 31 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
+There are **57 tools**: 4 baseline, 20 read-scoped, and 33 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
 
 The fields below summarize inputs. `?` means optional. See [contract.json](contract.json) for exact JSON Schemas, nested properties, defaults, descriptions and annotations. Additional runtime/database checks are described above.
 
@@ -129,6 +126,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 | --- | --- | --- |
 | [animate_channel_episode](#animate_channel_episode) | `characters:write` | episode: UUID; expected_version: integer; request_key: UUID; seconds_per_scene?: 4 \| 6 \| 8 = 8 |
 | [cancel_channel_invitation](#cancel_channel_invitation) | `characters:write` | id: UUID |
+| [cancel_episode_video](#cancel_episode_video) | `characters:write` | episode: UUID; video: UUID |
 | [check_ettu_update](#check_ettu_update) | baseline | installed_version: string |
 | [create_channel](#create_channel) | `characters:write` | name: string; universe: "clay" \| "anime"; main_characters: array&lt;UUID&gt;; description?: string = "" |
 | [create_channel_episode](#create_channel_episode) | `characters:write` | channel: UUID; title: string; description: string; position?: integer |
@@ -152,12 +150,13 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 | [list_channels](#list_channels) | `characters:read` | offset?: integer = 0; universe?: "clay" \| "anime" |
 | [list_character_statuses](#list_character_statuses) | baseline | none |
 | [list_character_versions](#list_character_versions) | `characters:read` | id: UUID |
-| [list_characters](#list_characters) | `characters:read` | offset?: integer = 0 |
+| [list_characters](#list_characters) | `characters:read` | offset?: integer = 0; lifecycle?: "active" \| "archived" \| "all" = "active" |
 | [list_episode_videos](#list_episode_videos) | `characters:read` | episode: UUID; offset?: integer = 0 |
 | [list_followed_characters](#list_followed_characters) | `characters:read` | offset?: integer = 0 |
 | [list_followed_users](#list_followed_users) | `characters:read` | offset?: integer = 0 |
 | [list_inbox](#list_inbox) | `characters:read` | folder?: "inbox" \| "sent" = "inbox"; unread?: boolean = false; archived?: boolean = false; offset?: integer = 0 |
 | [list_universes](#list_universes) | baseline | none |
+| [manage_character](#manage_character) | `characters:write` | id: UUID; expected_version: integer; action: "delete" \| "archive" \| "unarchive" |
 | [mark_inbox_message](#mark_inbox_message) | `characters:write` | id: UUID; read?: boolean; archived?: boolean |
 | [prepare_character](#prepare_character) | baseline | universe?: "clay" \| "anime"; name?: string; personality?: string; favorites?: array&lt;string&gt;; hates?: array&lt;string&gt;; appearance?: string; voice?: string |
 | [publish_character](#publish_character) | `characters:write` | id: UUID; expected_version: integer |
@@ -185,7 +184,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 
 ### animate_channel_episode
 
-Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with OpenAI opening-frame generation, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failures do not replace previous videos. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.
+Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with OpenAI opening-frame generation, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failed or cancelled renders do not replace previous videos. Use cancel_episode_video to stop an active render; a retry needs a fresh request_key. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false}`.
 
@@ -194,6 +193,12 @@ Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":f
 Director only: cancel a pending invitation and notify its recipient.
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false,"openWorldHint":true}`.
+
+### cancel_episode_video
+
+Director only. Cancel a specific queued, generating or assembling episode video. Read list_episode_videos first and pass its exact video UUID. This immediately frees the episode for another attempt and durably requests Temporal cancellation. Already ready, failed or cancelled versions are returned unchanged; this never cancels a newer render or changes publication. Provider requests already accepted may still finish and incur charges. Usage history is retained. To retry, use animate_channel_episode with a fresh request_key; reusing the old key returns the cancelled version. Cancel only on the user's request or standing authorization.
+
+Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":true}`.
 
 ### check_ettu_update
 
@@ -335,13 +340,13 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true}`.
 
 ### list_characters
 
-List your characters, including their latest versions. Use the version when updating.
+List your active characters, including their latest versions. Set lifecycle to archived for your archive, or all for both. Use the version when updating or managing a character.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true}`.
 
 ### list_episode_videos
 
-Read episode video generation status, progress, useful failure messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.
+Read episode video generation status, progress, useful failure/cancellation messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true}`.
 
@@ -368,6 +373,12 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":fal
 List owner-curated character universes and their visual styles. Ask the user to choose one before creating a character; the choice is permanent. Universes cannot be created or changed through MCP.
 
 Scope: baseline (authenticated connection). Annotations: `{"readOnlyHint":true}`.
+
+### manage_character
+
+Delete an owned character only if it has NEVER been published, or archive/unarchive a published character. Delete is permanent: the character, revisions, interview and jobs disappear; artwork is queued for cleanup. Archives stay publicly viewable in the creator’s Archived characters section and existing episodes, but leave discovery. Unarchive before editing the definition, publishing, setting status or adding to a new cast. Archiving does not create a version. If it was the main character, another active character is selected. Read get_character first and use its latest version. Only act on the owner’s explicit deletion/archive request; never delete to work around a generation error.
+
+Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":true,"idempotentHint":false}`.
 
 ### mark_inbox_message
 
@@ -467,7 +478,7 @@ Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":f
 
 ### set_main_character
 
-Choose one of your own ettus as the main character on your public user profile. The latest approved portrait/GIF represents you there, including its current status animation. The first character is the default. This changes only your profile selection; it does not create a character version or generate artwork. If the chosen character is unpublished, the profile shows a placeholder until publication.
+Choose one of your own active, unarchived ettus as the main character on your public user profile. The latest approved portrait/GIF represents you there, including its current status animation. The first character is the default. This changes only your profile selection; it does not create a character version or generate artwork. If the chosen character is unpublished, the profile shows a placeholder until publication.
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false,"idempotentHint":true,"openWorldHint":true}`.
 
