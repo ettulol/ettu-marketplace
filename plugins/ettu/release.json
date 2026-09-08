@@ -1,11 +1,21 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.10",
+  "version": "0.13.11",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.11",
+      "date": "2026-09-08",
+      "changes": [
+        "Character Settings groups Archive/Unarchive and confirmed deletion. Published and private characters can be deleted only without channel or episode references, including retained video snapshots. The new get_character_settings tool shares ownership and eligibility checks with the website.",
+        "My Profile opens on My characters and moves private account and assistant connection controls into Settings.",
+        "Episode reviews expose impact levels through website reports and MCP. Only significant rendering-style deviations trigger quality corrections; other quality findings remain advisory, and mandatory content checks remain separate. The existing one-correction limit is unchanged.",
+        "Opening-image failures preserve the actual provider reason instead of an incorrect interruption message. Character prompts explicitly request uniform solid sRGB #ffdf00 backgrounds; model-painted source pixels remain intact."
+      ]
+    },
     {
       "version": "0.13.10",
       "date": "2026-09-08",
