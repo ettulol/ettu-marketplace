@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.2",
+      "date": "2026-09-08",
+      "changes": [
+        "Episode guidance now covers shared scene planning, reviewed opening frames, parallel rendering and exact continuations using the preceding final frame.",
+        "Requested retries can reuse compatible completed and reviewed clips; set reuse_completed_scenes=false for a fresh rendition. Updated MCP documentation explains per-scene Google/Ettu diagnostics and cancellation.",
+        "The rendering changes run on the Ettu server. Existing OAuth connections keep working; updating the plugin refreshes instructions and requires no provider API keys."
+      ]
+    },
     {
       "version": "0.13.1",
       "date": "2026-09-08",

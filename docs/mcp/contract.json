@@ -19,7 +19,7 @@
   "tools": [
     {
       "name": "animate_channel_episode",
-      "description": "Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with Gemini opening-frame generation, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failed or cancelled renders do not replace previous videos. Use cancel_episode_video to stop an active render; a retry needs a fresh request_key. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.",
+      "description": "Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with a shared episode plan, reviewed Gemini opening frames, and bounded parallel scene rendering, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failed or cancelled renders do not replace previous videos. Use cancel_episode_video to stop an active render; a retry needs a fresh request_key. By default, compatible completed and reviewed clips from a failed/cancelled render are copied into the new version; unchanged story, cast revisions, models and duration are required. Set reuse_completed_scenes=false for an entirely new rendition. Overloaded scenes receive actionable planning feedback before images/videos are requested; no extra paid clips are silently added. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -37,6 +37,10 @@
             "type": "string",
             "format": "uuid",
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "reuse_completed_scenes": {
+            "default": true,
+            "type": "boolean"
           },
           "seconds_per_scene": {
             "default": 8,
@@ -969,7 +973,7 @@
     },
     {
       "name": "list_episode_videos",
-      "description": "Read episode video generation status, progress, useful failure/cancellation messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.",
+      "description": "Read episode video generation status, progress, useful failure/cancellation messages, pipeline stage, completed/reused scene counts and immutable render history, newest first (50 per page). Directors/staff see all versions plus scene_statuses containing provider operations and bounded Google/Ettu review diagnostics; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.",
       "inputSchema": {
         "type": "object",
         "properties": {

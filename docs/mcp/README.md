@@ -1,10 +1,10 @@
 # ettu MCP contract
 
-This client contract is exported from the ettu application repository. The inventory comes from real MCP `tools/list` discovery; [contract.json](contract.json) contains the exact input schemas, descriptions, annotations and scope requirements. This is a source snapshot, not proof of a deployed server version. Discover tools on your connected server before calling them.
+This is the current client contract, with an inventory generated from the real MCP server's `tools/list` response. Proposed changes are separate in [the review](review.md); they are **not implemented APIs**. Exact advertised input schemas, descriptions, annotations, server identity and instructions are in [contract.json](contract.json).
 
 ## Connection and authorization
 
-- Transport: Streamable HTTP at `https://ettu.lol/mcp`. Website: [ettu.lol](https://ettu.lol).
+- Transport: Streamable HTTP. Public deployment target: `https://ettu.lol/mcp`. The current development tunnel is `https://rico-dev.ettu.lol/mcp`; direct local development defaults to `http://localhost:3001/mcp`. Configure `MCP_URL` and `APP_URL` for the installation; the public target does not imply a deployed service.
 - Connect through ettu OAuth authorization-code + PKCE. Discovery is under `/.well-known/oauth-authorization-server` and `/.well-known/oauth-protected-resource/mcp` on the MCP origin. Approve the connection with your invited/approved Clerk account. Send the resulting ettu bearer token, not a Clerk session token, to `/mcp`.
 - Initialization metadata advertises the ettu title, website and public yellow icon at `https://ettu.lol/brand/pwa-512.png` (`image/png`, 512×512). Icon display is optional and controlled by the host; the image requires no bearer token.
 - Identity comes from the authenticated connection. Tool arguments never select the acting owner/director. Public user IDs mean profile UUIDs, not Clerk IDs or private account UUIDs.
@@ -47,7 +47,7 @@ Only `animate_channel_episode` has an explicit `request_key`: use a fresh UUID p
 
 ## Result shapes by operation
 
-These are semantic summaries, not validated output schemas. SQL-backed objects may include additional fields; callers should tolerate additive fields.
+These are semantic summaries, not validated output schemas. SQL-backed objects may include additional fields; callers should tolerate additive fields. See [mcp.ts](../../src/mcp.ts), [channels.ts](../../src/channels.ts), [episode-video-tools.ts](../../src/episode-video-tools.ts) and their RPC definitions in [migrations](../../supabase/migrations).
 
 | Operations | Successful JSON payload |
 | --- | --- |
@@ -111,9 +111,15 @@ Example tool arguments (replace placeholder identifiers with real UUIDs):
 {"name":"update_episode_scene","arguments":{"episode":"00000000-0000-4000-8000-000000000002","id":"00000000-0000-4000-8000-000000000003","expected_version":4,"title":"One more try","description":"Still at the kitchen table, Moss slides the repaired radio toward Jun and waits for a reaction.","characters":["00000000-0000-4000-8000-000000000001"]}}
 ```
 
-## Contract updates
+## Maintaining this contract
 
-The publisher regenerates this README and JSON together from the application repository. The installed plugin has its own [release metadata](../../plugins/ettu/release.json); its version differs from the server implementation version. Runtime tools remain authoritative. The marketplace includes documentation and connection skills only; users do not need the application source or its maintainer scripts.
+Run `npm run mcp:docs` after changing tool registrations, descriptions, schemas or scope gates. Commit the updated README and JSON together. `npm run mcp:check` and the normal unit suite fail if the generated inventory drifts. The check uses real in-memory SDK discovery under baseline, read, write and combined permissions. It reads no `.env`, blocks fetch, invokes no business tools, generates no artwork and needs no running database.
+
+For a marketplace release, run `python3 scripts/sync-plugin-contract.py` to export the public contract to the sibling `ettu-marketplace/docs/mcp/` directory, then `python3 scripts/sync-plugin-contract.py --check` to verify it. The export retains exact tool schemas and client guidance while removing development endpoints and application-only links. `--destination <directory>` supports staging before publication. Keep this maintainer script in the application repository; users install only the public bundle.
+
+The generated section is exact discovery metadata. Maintain the semantic result summaries, database-only invariants, workflows and [review](review.md) when behavior changes; the drift check cannot infer SQL return shapes or certify those handwritten sections. Exported `schema_version` describes the snapshot file format; the current MCP server implementation version is not a separately managed contract release. Plugin releases have their own versions.
+
+MCP supports typed structured results and optional output schemas; adopting those is a proposed improvement, not current behavior. See the [official tool specification](https://modelcontextprotocol.io/specification/2025-11-25/server/tools).
 
 ## Generated tool inventory
 
@@ -124,7 +130,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 
 | Tool | Required scope | Inputs |
 | --- | --- | --- |
-| [animate_channel_episode](#animate_channel_episode) | `characters:write` | episode: UUID; expected_version: integer; request_key: UUID; seconds_per_scene?: 4 \| 6 \| 8 = 8 |
+| [animate_channel_episode](#animate_channel_episode) | `characters:write` | episode: UUID; expected_version: integer; request_key: UUID; reuse_completed_scenes?: boolean = true; seconds_per_scene?: 4 \| 6 \| 8 = 8 |
 | [cancel_channel_invitation](#cancel_channel_invitation) | `characters:write` | id: UUID |
 | [cancel_episode_video](#cancel_episode_video) | `characters:write` | episode: UUID; video: UUID |
 | [check_ettu_update](#check_ettu_update) | baseline | installed_version: string |
@@ -184,7 +190,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 
 ### animate_channel_episode
 
-Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with Gemini opening-frame generation, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failed or cancelled renders do not replace previous videos. Use cancel_episode_video to stop an active render; a retry needs a fresh request_key. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.
+Director only. Generate a new video version from ALL ordered episode scenes and the cast's published personalities, appearance and voice. This queues paid Google Veo 3.1 video generation (one 4, 6, or 8 second clip per scene, always 720p and 16:9 widescreen) with a shared episode plan, reviewed Gemini opening frames, and bounded parallel scene rendering, and does not publish. Requires published cast artwork and at least one scene. Supply a fresh UUID request_key per intended render; reuse it after a lost response to avoid duplicate charges. Read the episode first for expected_version. Inspect generation progress with list_episode_videos; failed or cancelled renders do not replace previous videos. Use cancel_episode_video to stop an active render; a retry needs a fresh request_key. By default, compatible completed and reviewed clips from a failed/cancelled render are copied into the new version; unchanged story, cast revisions, models and duration are required. Set reuse_completed_scenes=false for an entirely new rendition. Overloaded scenes receive actionable planning feedback before images/videos are requested; no extra paid clips are silently added. Before requesting a render, check the scene plan: Establish the location, scenery, time of day and lighting in the episode description or first scene. Later scenes stay in the last established setting unless a scene explicitly describes a location or time change; a new scene number or camera angle alone is not a change of setting. Read the ordered scenes and published cast definitions before writing or revising. Ground each character's dialogue, reactions and delivery in their personality and voice description, including tone, pitch, texture, pace and accent when supplied. Write one achievable action beat per scene, with a clear opening state and an ending that leads into the next scene. Carry props, character positions, eyelines and movement direction across cuts. Keep dialogue short enough to finish within the clip and leave a brief natural lead-in and tail; never split a word or unfinished gesture at a boundary. Describe intentional location changes and transition cues explicitly.
 
 Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":false}`.
 
@@ -346,7 +352,7 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true}`.
 
 ### list_episode_videos
 
-Read episode video generation status, progress, useful failure/cancellation messages and immutable render history, newest first (50 per page). Directors/staff see all versions; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.
+Read episode video generation status, progress, useful failure/cancellation messages, pipeline stage, completed/reused scene counts and immutable render history, newest first (50 per page). Directors/staff see all versions plus scene_statuses containing provider operations and bounded Google/Ettu review diagnostics; channel viewers see only the published episode's selected video. Public videos use public playback URLs; private previews use short-lived signed URLs. Read-only; does not retry a failed render or change publication.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true}`.
 
