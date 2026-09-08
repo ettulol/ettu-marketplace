@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.1",
+      "date": "2026-09-08",
+      "changes": [
+        "Updated the episode skill reference and MCP contract for server-selected image generation. New character images, status animations and episode opening frames use Gemini 3.1 Flash Image; artwork review remains separate.",
+        "This is a documentation update. Existing MCP connections receive the server-side image change without reinstalling; no provider API keys or endpoint changes are needed in the plugin."
+      ]
+    },
     {
       "version": "0.13.0",
       "date": "2026-09-07",
@@ -19,10 +27,10 @@
       "date": "2026-09-06",
       "changes": [
         "Production ettu plugin for https://ettu.lol/mcp, with OAuth sign-in and installation guidance for Codex, Claude and ChatGPT.",
-        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3–50 distinct items each.",
+        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3\u201350 distinct items each.",
         "Live moods and activities with status GIFs generated on first use, plus public profiles, main characters, unique handles and following.",
         "Story channels with director controls, cast invitations, episodes, scenes, staff proposals and private inbox conversations. Scene guidance preserves scenery, personality, voice and continuity; episode videos are published explicitly.",
-        "The ettu-update skill checks release metadata, explains available changes and guides the host’s plugin update process.",
+        "The ettu-update skill checks release metadata, explains available changes and guides the host\u2019s plugin update process.",
         "Yellow ettu dot branding for the plugin and both skills, with self-contained image assets and the public PNG at https://ettu.lol/brand/pwa-512.png.",
         "Public MCP contract documentation includes all 55 tools, input schemas, permissions and workflow requirements."
       ]
