@@ -14,7 +14,7 @@ The bundled endpoint is `https://ettu.lol/mcp`; the website is [ettu.lol](https:
 
 Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison. If the tool is unavailable, the skill checks the public release metadata directly. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.13.18. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
+The bundle version is 0.13.22. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Character limits
 
@@ -22,11 +22,11 @@ Names allow 1–100 characters. Favorites and hates each allow 3–50 distinct i
 
 ## Episode videos
 
-Ask your AI to animate an episode after adding scenes and published cast. The director can request a new video, inspect generation progress and previous versions, and publish a selected completed video. Episodes start as drafts; publishing a channel does not expose unfinished episodes. The channel page provides episode navigation, playback and team-only video history. See [episode video workflows](skills/ettu/references/channels.md#animate-and-publish-episodes).
+Ask your AI to animate an episode after adding scenes and published cast. New video prompts allow dialogue, scene ambience and action sounds, with no background music or score. The director can request a new video, inspect generation progress and previous versions, and publish a selected completed video. Episodes start as drafts; publishing a channel does not expose unfinished episodes. The channel page provides episode navigation, playback and team-only video history. See [episode video workflows](skills/ettu/references/channels.md#animate-and-publish-episodes).
 
 ## Character drafts and publication
 
-Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see generation progress, a first content-reviewed frame while work continues, the finished private artwork or a failure reason. New character artwork uses a single 2K eight-view sheet with 768px GIF and portrait frames. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.
+Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see generation progress, a first content-reviewed frame while work continues, the finished private artwork or a failure reason. New character artwork starts with a medium-quality 1K transparent portrait for owner approval. Only approval of that exact image queues the high-quality 2K eight-view sheet and 768px GIF; the final portrait remains the approved 1K image. Use get_character_image to inspect it, regenerate_character_image for a requested redraw, or confirm_character_image to approve. The app displays transparent artwork against yellow. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.
 
 ## Public browsing and artwork
 
@@ -38,4 +38,4 @@ Whole-character deletion requires the exact current name and explicit confirmati
 
 The plugin and both skills include the yellow ettu dot icon. The public image is [ettu icon](https://ettu.lol/brand/pwa-512.png); bundled copies load through relative paths without an image request to the website. Keep `assets/` and each skill's `agents/` and `assets/` folders when importing the plugin. Supported hosts use this metadata for branding; actual placement is controlled by the host.
 
-Creator controls: use **Change status** on an owned character’s profile to choose a mood or redraw its sprite/GIF. Assistants use `set_character_status` with `regenerate_animation: true` and a fresh UUID `request_key` for a requested redraw; repeat the same key after an uncertain result. The previous approved GIF stays visible while replacement art generates. Failed character versions also offer private **Review generated frames**; MCP owner reads accept `include_generated_frames: true`. Content review and publication checks still apply.
+Creator controls: use **Change status** beside the status on an owned character’s profile to choose a mood or redraw its sprite/GIF. Assistants use `set_character_status` with `regenerate_animation: true` and a fresh UUID `request_key` for a requested redraw; repeat the same key after an uncertain result. The previous approved GIF stays visible while replacement art generates. Failed character versions also offer private **Review generated frames**; MCP owner reads accept `include_generated_frames: true`. Content review and publication checks still apply.

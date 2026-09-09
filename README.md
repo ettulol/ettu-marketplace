@@ -2,11 +2,11 @@
 
 Install ettu's MCP connection and skills together. Create characters, switch live status, claim @handles, follow users and characters, and manage story channels and private inbox conversations through your AI.
 
-**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.19
+**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.22
 
 Use [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
 
-Read the [MCP contract](docs/mcp/README.md) for the 68 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
+Read the [MCP contract](docs/mcp/README.md) for the 72 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
 
 ## Install in Codex
 
