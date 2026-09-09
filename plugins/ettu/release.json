@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.19",
+  "version": "0.13.20",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.20",
+      "date": "2026-09-09",
+      "changes": [
+        "New character versions use high-quality gpt-image-2 transparent PNGs: one 1K image for owner approval before a 2K eight-view sprite. PNG alpha and the exact approved portrait are preserved.",
+        "Website and MCP can retrieve, approve or redraw the exact candidate under the same version. get_character_image, confirm_character_image and regenerate_character_image share ownership, concurrency and durable request checks. Approval never publishes.",
+        "Creation and definition edits now require durable request_key values as well. Retry delivery with the original key and arguments. Failed sprites reuse approved images; failed quality-review originals remain inspectable after content review."
+      ]
+    },
     {
       "version": "0.13.19",
       "date": "2026-09-09",
