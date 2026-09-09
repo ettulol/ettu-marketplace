@@ -14,7 +14,7 @@ The bundled endpoint is `https://ettu.lol/mcp`; the website is [ettu.lol](https:
 
 Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison. If the tool is unavailable, the skill checks the public release metadata directly. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.13.26. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
+The bundle version is 0.13.27. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Character limits
 
@@ -30,7 +30,7 @@ Creating, updating or restoring a character leaves a private draft. Open its pro
 
 ## Public browsing and artwork
 
-Ask to browse Discover, inspect a public character or creator profile, or list a creator’s published characters. Use `list_character_channels` for the public channels featuring a character in published episodes, with previews and episode links ordered by the latest appearance. Request a character portrait or sprite through `get_character_artwork`; PNGs can appear directly in the assistant and include original download links. GIFs and manifests use links. Published artwork follows the published version; explicit versions and never-published artwork are owner-only. Reading artwork does not generate or publish anything.
+Ask to browse Home or search characters, channels and episodes together, inspect a public character or creator profile, or list a creator’s published characters. Use `list_character_channels` for the public channels featuring a character in published episodes, with previews and episode links ordered by the latest appearance. Request a character portrait or sprite through `get_character_artwork`; PNGs can appear directly in the assistant and include original download links. GIFs and manifests use links. Published artwork follows the published version; explicit versions and never-published artwork are owner-only. Reading artwork does not generate or publish anything.
 
 Whole-character deletion requires the exact current name and explicit confirmation, including deleting the final private version. The server checks ownership, concurrent changes and channel or episode references.
 

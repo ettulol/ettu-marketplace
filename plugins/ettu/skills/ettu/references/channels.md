@@ -2,6 +2,12 @@
 
 A channel has one permanent universe, 1–5 main characters and optional supporting cast from that universe. Its creator is the director. It starts private: only its director and accepted staff can read it. Public channels grant everyone viewer access to cast and published episodes/scenes and their selected video, but never to staff lists, invitations, proposals or inbox threads.
 
+## Find channels and subscribe
+
+Home groups characters, channels and episodes; the shared Search covers all worlds by default. Use `browse_discovery` with `kind: "channel"` for public browsing and `search_discovery` for grouped search. Use `list_my_channels` for private director/staff work, retaining existing creator, version and Studio behavior. Both subscription and personal channel lists return bounded pages with `next_offset`; `list_channels` still returns all accessible public/team channels in pages of 50.
+
+On the user's request, `set_channel_subscription` sets a desired `subscribed` boolean. Retry the same desired state after uncertain delivery. `get_channel_subscription` reads it; `list_channel_subscriptions` lists your subscribed public channels. `list_subscription_episodes` is a chronological feed of their published episodes; follow its `next_cursor` unchanged. Subscription grants no staff access and never sends messages or generates/publishes. Private channels and drafts stay hidden even if the subscriber is a team member; a hidden channel's preference can reappear when it becomes public. Channel deletion removes its subscriptions. Character follows remain separate.
+
 ## Create and cast
 
 Use `list_channels` to find accessible channels, with `offset` for pages of 50 and optional `universe`. Read `get_channel` for the current role, version, cast and episode summaries. Website address: `https://ettu.lol/channels/<channel UUID>` for this production distribution; use the connected origin for a deliberate custom server. Watch provides the player, episode list, description and cast. Studio groups Story, Video and Activity, showing one workspace at a time. Story starts with the first scene by default; display order does not change story order in MCP reads. The back arrow sits beside the channel name, with private visibility kept visible.

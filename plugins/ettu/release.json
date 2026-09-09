@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.26",
+  "version": "0.13.27",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.27",
+      "date": "2026-09-09",
+      "changes": [
+        "Home brings characters, channels and episodes together with compact world filters, a global Search and an expandable left sidebar. The existing ettu logo, character/version pages, creator Studio, settings and deep links remain accessible.",
+        "Channel subscriptions are private, distinct from character follows and grant no team access. Subscribe controls share desired-state validation with MCP; the subscription feed includes only public channels and published episodes with the selected ready video.",
+        "Six new tools cover grouped search, personal director/staff channels, subscription state, subscribe/unsubscribe, subscription lists and the chronological episode feed. Public browsing adds channels and all-world queries. Guidance and the 79-tool contract match the website."
+      ]
+    },
     {
       "version": "0.13.26",
       "date": "2026-09-09",
