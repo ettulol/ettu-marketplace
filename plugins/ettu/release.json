@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.22",
+  "version": "0.13.23",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.23",
+      "date": "2026-09-09",
+      "changes": [
+        "Character versions put the picture and two choices first: I like it! approves that exact image and starts its animation; Try another look requests a new candidate. Approval and publication remain separate.",
+        "Make a new version and Try drawing again retain existing generation semantics. Character details, downloads, history and deletion are grouped into expandable sections with the same confirmation and ownership checks.",
+        "Character pages use less space above the tabs, a compact draft shortcut, and a shared sketching-face loading view to smooth initial loading. Reduced-motion preferences show a still logo. Assistant guidance and the public 72-tool contract match the new labels."
+      ]
+    },
     {
       "version": "0.13.22",
       "date": "2026-09-09",
