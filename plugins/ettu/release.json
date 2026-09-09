@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.27",
+  "version": "0.13.28",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.28",
+      "date": "2026-09-09",
+      "changes": [
+        "Create in the website header opens Connect your AI. My channels sits beside the world filters on the public and personal channel lists.",
+        "Channel cards use a responsive grid, the cloud keeps its original colors, and channel loading preserves the player and Studio selection while retaining account and access boundaries.",
+        "Navigation guidance and the exported 79-tool contract remain synchronized; generation, publication, subscriptions and deletion semantics are unchanged."
+      ]
+    },
     {
       "version": "0.13.27",
       "date": "2026-09-09",
