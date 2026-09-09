@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.18",
+  "version": "0.13.19",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.19",
+      "date": "2026-09-09",
+      "changes": [
+        "Completed and failed character attempts expose private original generated-image links separately from processed sprites in the website and authenticated MCP reads.",
+        "Whole-image content review is recorded before fitting, so originals survive layout and quality failures. New work retains every reviewed image attempt; older normalized checkpoints can expose their latest reviewed source.",
+        "Originals use the existing seven-day retention and short-lived signed links. Pending jobs keep the reviewed first-frame preview; content-rejected artwork remains unavailable. Reads never generate or publish artwork."
+      ]
+    },
     {
       "version": "0.13.18",
       "date": "2026-09-09",
