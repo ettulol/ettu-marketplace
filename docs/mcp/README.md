@@ -91,6 +91,7 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `get_character` | Latest private revision/definition/interview, `id` (character), `revision_id`, generation data, signed assets, publication information, `has_been_published`, `archived_at` and `profile_url`. |
 | `get_character_version` | Retained revision details, definition/interview, assets and generation settings; differs from the latest-read envelope. |
 | `list_character_versions` | `{id, current_version, retention_limit: 20, versions: [...]}`, newest version first, with names, publication dates and current published markers. |
+| `get_live_status` | `{states: [...]}` in requested-topic order. Each state has `key`, `kind`, optional resource `id`, `available`, and opaque `details_token`, `media_token`, `activity_token`. Authorized character/collection states include compact revision progress; episode states include role-filtered video progress. No definitions, interviews, scenes, signed URLs or image bytes. |
 | `delete_character_version` | `{id, deleted_version, character_deleted, current_version}`; `current_version` is null when the final private character is deleted. |
 | `create_character`, `update_character`, `restore_character_version` | Saved identity/version data plus `publication_status: "draft"` and `profile_url`; creation/restore also include a next-step message. |
 | `regenerate_character` | `{id, revision_id, version, regenerated_from_version, generation_attempt, retried_in_place, superseded, status, universe, publication_status, reused_request, retained, profile_url}`. A receipt can refer to a published, removed or superseded attempt. `retried_in_place` identifies a failed-version retry; it uses a fresh job under the same version number. `regenerated_from_version` preserves the logical version's original provenance and can be null. |
@@ -167,6 +168,16 @@ New opening-frame, sampled-video and cut reviews use `style-impact-v1`. Reviews 
 
 Directors/staff see the same findings in Studio/Channel director activity, `list_episode_videos.scene_statuses` and `get_episode_video_report` events under `data.review`. Correction scope (`local`, `forward`, `full`) is separate from issue impact. The existing one-correction-per-started-shot allowance is unchanged. Original image-provider errors are retained rather than replaced by an interruption message; an invalid image response is not a creative-quality correction. Unknown submissions are not silently repeated. Historical reports keep their original verdicts; new review policy participates in generation reuse fingerprints. Reads do not start generation or publish, and a fresh render still needs the user's request and a new durable request key.
 
+## Compact live status
+
+`get_live_status` is a read-scoped, authenticated snapshot shared with the website. Batch active interests in `topics`: `{kind: "character", id, version?}`, `{kind: "channel", id}`, `{kind: "episode", id}`, `{kind: "my_characters", offset?}` or `{kind: "channels", offset?, universe?}`. Use UUIDs, at most 50 explicit resources, and at most one page of each collection (52 topics total). Topics must be unique. Collection pages contain up to 50 records; offsets are 0–100,000 and default to 0. A character topic without `version` includes up to 20 retained revisions; an explicit version follows that version through same-version generation retries. Episode progress includes up to 20 recent render versions for directors/staff and only the selected published video for a viewer.
+
+Character topics and `my_characters` require ownership. Channel and episode topics apply the existing director/staff/viewer and publication rules. Missing and inaccessible IDs return the same `available: false` envelope. Disabled accounts cannot read. Opaque tokens are equality markers for relevant full-detail, media and director-activity changes, not authorization, timestamps, event sequences or generation receipts. Private draft activity does not change a viewer's public tokens. Error summaries are limited to 200 characters; use full reads for explanations and diagnostics.
+
+Use the existing detail, image, sprite and video tools when needed. Check compact progress at reasonable intervals (for example 15–60 seconds during generation); pause automatic checks at `awaiting_image_approval` until the owner responds. A snapshot can skip intermediate progress and is not a history feed. Retain the original request key after a lost command response: reading status never authorizes a generation, retry, approval, deletion or publication.
+
+The website multiplexes these snapshots over one authenticated SSE connection per tab, with token renewal and a shared polling fallback. MCP remains stateless POST-only Streamable HTTP with JSON tool results; assistants do not need to hold the website stream open. Discover `get_live_status` before using it against older deployments, and use existing full reads if it is not advertised.
+
 ## Contract updates
 
 The publisher regenerates this README and JSON together from the application repository. The installed plugin has its own [release metadata](../../plugins/ettu/release.json); its version differs from the server implementation version. Runtime tools remain authoritative. The marketplace includes documentation and connection skills only; users do not need the application source or its maintainer scripts.
@@ -174,7 +185,7 @@ The publisher regenerates this README and JSON together from the application rep
 ## Generated tool inventory
 
 <!-- BEGIN GENERATED MCP CONTRACT -->
-There are **71 tools**: 4 baseline, 29 read-scoped, and 38 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
+There are **72 tools**: 4 baseline, 30 read-scoped, and 38 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
 
 The fields below summarize inputs. `?` means optional. See [contract.json](contract.json) for exact JSON Schemas, nested properties, defaults, descriptions and annotations. Additional runtime/database checks are described above.
 
@@ -207,6 +218,7 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 | [get_episode_video_report](#get_episode_video_report) | `characters:read` | video: UUID; before?: integer; plan_revision?: integer; shot?: integer |
 | [get_inbox_message](#get_inbox_message) | `characters:read` | id: UUID |
 | [get_inbox_thread](#get_inbox_thread) | `characters:read` | id: UUID; offset?: integer = 0 |
+| [get_live_status](#get_live_status) | `characters:read` | topics: array&lt;object \| object \| object \| object \| object&gt; |
 | [get_my_profile](#get_my_profile) | `characters:read` | none |
 | [get_public_character](#get_public_character) | `characters:read` | target: string |
 | [get_public_profile](#get_public_profile) | `characters:read` | target: string |
@@ -413,6 +425,12 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":fal
 Read a conversation you participate in, oldest first, 50 per page. Use offset for later messages. All replies reference their original message.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}`.
+
+### get_live_status
+
+Read compact current character generation, image approval and channel/episode video status for several resources at once. Character topics require ownership; channel/episode topics obey the same director, staff, viewer and publication boundaries as full reads. my_characters and channels are paginated, 50 per page. Unavailable and inaccessible IDs have the same response. Read full details or reviewed artwork with the existing character/image/channel/episode tools when needed. Change tokens are opaque equality markers, not event history or generation receipts. This read never generates, confirms, retries, deletes or publishes anything; retain the original request key when checking a command with a lost response.
+
+Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"idempotentHint":true,"openWorldHint":false}`.
 
 ### get_my_profile
 

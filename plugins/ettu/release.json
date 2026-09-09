@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.20",
+  "version": "0.13.21",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.21",
+      "date": "2026-09-09",
+      "changes": [
+        "get_live_status batches compact generation, image-approval and channel/episode progress with the same ownership, role and publication rules as full reads. Discover it before calling older servers.",
+        "Website status readers share one authenticated SSE connection, renew expiring sessions and fall back to a batched read during outages. Signed artwork URLs remain stable until renewal is needed.",
+        "Updated guidance and the public 72-tool contract explain current-state snapshots, bounded topics and retained command request keys. Status reads never generate, approve, retry, delete or publish anything."
+      ]
+    },
     {
       "version": "0.13.20",
       "date": "2026-09-09",
