@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.24",
+  "version": "0.13.25",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.25",
+      "date": "2026-09-09",
+      "changes": [
+        "Character profiles show Featured in Channels with public episode previews, ordered by the most recent featured publication. The new list_character_channels read tool returns the same paginated list and links.",
+        "Featured appearances use the selected published video snapshot. Private channels, draft episodes, unselected renders and cast membership alone are excluded, including for connected owners.",
+        "My characters returns to navigation. The signed-in dropdown opens My settings, includes Connect your AI and offers a System/Light/Dark theme toggle. Guests retain Connect your AI in the main navigation. Assistant guidance and the public 73-tool contract match these changes."
+      ]
+    },
     {
       "version": "0.13.24",
       "date": "2026-09-09",
