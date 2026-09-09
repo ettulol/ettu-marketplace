@@ -101,7 +101,7 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `get_character_settings` | `{id, name, version, first_published_at, archived_at, can_delete, can_archive, can_unarchive, delete_blocked_reason}`; owner-only, shared with website Settings. |
 | `manage_character` | Delete: `{id, deleted: true}`. Archive/unarchive: `{id, version, archived_at, deleted: false}`; `archived_at` is null after unarchive. |
 | `get_character_status` / `set_character_status` | `{id, status, label, updated_at, published_version, archived_at, animation_id, animation_state, gif, using_fallback, using_previous_animation, error}`. Status can be null. |
-| `list_channels` | Up to 50 accessible channel summaries, newest first, optionally filtered by universe. |
+| `list_channels` | Up to 50 accessible channel summaries, newest first, optionally filtered by universe. `latest_episode` is null or `{id, number, title, preview_url}` for the highest-numbered published episode, using its selected video. |
 | `delete_channel` | `{id, deleted: true, deleted_at, media_withdrawal_pending}`. Identical confirmed retries return the original receipt with current public-media withdrawal status. |
 | `get_channel`, `create_channel`, `update_channel`, `set_channel_character`, `remove_channel_character` | Accessible channel object with caller role, version, cast, episode summaries and team information where permitted. |
 | `get_channel_episode` / `set_episode_publication` | Episode record with ascending scenes, video metadata/history and selected published video, filtered by role. |
@@ -170,11 +170,15 @@ Status controls use **Set status**, **Draw again** (or **Set status & draw again
 
 ## Episode video quality findings
 
+The channel page opens on **Watch**, with playback, episode navigation, description and cast. Studio shows one workspace at a time: **Story** for the original scenes (first scene first by default), **Video** for a selected version and its plan, and **Activity** for director reports and **What happened?** failure details. A single video-version selector replaces nested video-history sections; choosing a preview never generates or publishes. **Stop making video** uses the same exact-video cancellation operation. Channel settings and deletion remain creator-only.
+
+Channel cards, Discover episodes and Featured in Channels reuse the reviewed first frame already extracted from the selected published video. This adds no AI generation call. `list_channels` and `get_channel` expose `latest_episode.preview_url`; episode video objects expose `thumbnail_url`. These are public URLs only when the channel and episode are published, the selected video is ready, and its first frame passed review and is retained. Private or unselected versions never receive a public thumbnail URL. Existing retained frames work immediately; older videos without one use the normal placeholder. Thumbnail copies use the same checked delivery and withdrawal rules as videos, including unpublishing, private-channel changes and deletion. Reading a thumbnail does not request a new video.
+
 New video prompts request dialogue, scene-matching ambient noise and action sounds only, with no background music, musical score or musical stingers. This shared direction applies to MCP-authored episodes, shot planning, corrections and final render prompts. The audio policy participates in render reuse fingerprints, so fresh renders cannot borrow clips generated under the earlier policy. Existing videos and durable command receipts remain unchanged; no video is automatically regenerated. These are provider instructions, not an audio-content verification: the sampled-still reviews below cannot detect unwanted music.
 
 New opening-frame, sampled-video and cut reviews use `style-impact-v1`. Reviews retain `accepted`, blocking `issues` and advisory `warnings`, and add `policy` plus `findings` containing `code`, `detail`, `impact_level` (`low`, `medium`, `high`), `category` (`quality` or `content_policy`) and `blocking`. Significant rendering-style deviation from the selected universe is the only high-impact quality condition that triggers correction. Minor style variation and identity, setting, action-state or continuity differences remain visible advisories. Content-policy violations still block independently. These reviews inspect sampled stills, not speech, voice, lip sync or every frame.
 
-Directors/staff see the same findings in Studio/Channel director activity, `list_episode_videos.scene_statuses` and `get_episode_video_report` events under `data.review`. Correction scope (`local`, `forward`, `full`) is separate from issue impact. The existing one-correction-per-started-shot allowance is unchanged. Original image-provider errors are retained rather than replaced by an interruption message; an invalid image response is not a creative-quality correction. Unknown submissions are not silently repeated. Historical reports keep their original verdicts; new review policy participates in generation reuse fingerprints. Reads do not start generation or publish, and a fresh render still needs the user's request and a new durable request key.
+Directors/staff see the same findings in Studio → Activity, `list_episode_videos.scene_statuses` and `get_episode_video_report` events under `data.review`. Correction scope (`local`, `forward`, `full`) is separate from issue impact. The existing one-correction-per-started-shot allowance is unchanged. Original image-provider errors are retained rather than replaced by an interruption message; an invalid image response is not a creative-quality correction. Unknown submissions are not silently repeated. Historical reports keep their original verdicts; new review policy participates in generation reuse fingerprints. Reads do not start generation or publish, and a fresh render still needs the user's request and a new durable request key.
 
 ## Compact live status
 
@@ -359,7 +363,7 @@ Scope: characters:write. Annotations: `{"readOnlyHint":false,"destructiveHint":t
 
 ### get_channel
 
-Read an accessible channel, cast, role, version, and ordered episode summaries. Use get_channel_episode for scenes. Website: /channels/{id}.
+Read an accessible channel, cast, role, version, ordered episode summaries, and latest_episode with its public video thumbnail preview_url when available. Use get_channel_episode for scenes. Website: /channels/{id}; Watch contains playback, while Studio groups Story, Video and Activity. Reading previews never generates artwork or publishes anything.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}`.
 
@@ -485,7 +489,7 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":fal
 
 ### list_channels
 
-List public channels and channels where you are director/staff, 50 per page. Private channels belonging to others are hidden.
+List public channels and channels where you are director/staff, 50 per page. Private channels belonging to others are hidden. Each summary includes latest_episode for the highest-numbered published episode, with preview_url for its selected video’s reviewed opening frame when publicly available. Thumbnails reuse existing video frames and never generate artwork.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"openWorldHint":false}`.
 

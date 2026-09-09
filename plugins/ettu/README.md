@@ -14,7 +14,7 @@ The bundled endpoint is `https://ettu.lol/mcp`; the website is [ettu.lol](https:
 
 Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison. If the tool is unavailable, the skill checks the public release metadata directly. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.13.25. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
+The bundle version is 0.13.26. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Character limits
 
@@ -22,7 +22,7 @@ Names allow 1–100 characters. Favorites and hates each allow 3–50 distinct i
 
 ## Episode videos
 
-Ask your AI to animate an episode after adding scenes and published cast. New video prompts allow dialogue, scene ambience and action sounds, with no background music or score. The director can request a new video, inspect generation progress and previous versions, and publish a selected completed video. Episodes start as drafts; publishing a channel does not expose unfinished episodes. The channel page provides episode navigation, playback and team-only video history. See [episode video workflows](skills/ettu/references/channels.md#animate-and-publish-episodes).
+Ask your AI to animate an episode after adding scenes and published cast. New video prompts allow dialogue, scene ambience and action sounds, with no background music or score. The director can request a new video, inspect generation progress and previous versions, and publish a selected completed video. Episodes start as drafts; publishing a channel does not expose unfinished episodes. The channel page opens on Watch. Studio shows one of Story, Video or Activity at a time, with one video-version selector for earlier plans and reports. Channel cards use the latest published episode’s reviewed first video frame as a thumbnail, without an extra AI call. See [episode video workflows](skills/ettu/references/channels.md#animate-and-publish-episodes).
 
 ## Character drafts and publication
 

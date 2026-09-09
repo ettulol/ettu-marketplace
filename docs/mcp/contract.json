@@ -794,7 +794,7 @@
     },
     {
       "name": "get_channel",
-      "description": "Read an accessible channel, cast, role, version, and ordered episode summaries. Use get_channel_episode for scenes. Website: /channels/{id}.",
+      "description": "Read an accessible channel, cast, role, version, ordered episode summaries, and latest_episode with its public video thumbnail preview_url when available. Use get_channel_episode for scenes. Website: /channels/{id}; Watch contains playback, while Studio groups Story, Video and Activity. Reading previews never generates artwork or publishes anything.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1541,7 +1541,7 @@
     },
     {
       "name": "list_channels",
-      "description": "List public channels and channels where you are director/staff, 50 per page. Private channels belonging to others are hidden.",
+      "description": "List public channels and channels where you are director/staff, 50 per page. Private channels belonging to others are hidden. Each summary includes latest_episode for the highest-numbered published episode, with preview_url for its selected video’s reviewed opening frame when publicly available. Thumbnails reuse existing video frames and never generate artwork.",
       "inputSchema": {
         "type": "object",
         "properties": {

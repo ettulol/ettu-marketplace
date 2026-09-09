@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.25",
+  "version": "0.13.26",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.26",
+      "date": "2026-09-09",
+      "changes": [
+        "Channel pages open on Watch, with a compact header and no director reports below playback. Studio presents Story, Video and Activity one at a time, with one selector for previous video versions.",
+        "Channel cards, Discover episodes and Featured in Channels reuse the reviewed opening frame already extracted from a published video, without another AI generation call. Thumbnails follow selected-video publication and withdrawal rules.",
+        "Existing MCP channel reads return latest_episode.preview_url, and video objects include thumbnail_url. Assistant guidance and the 73-tool contract match the simplified navigation; generation, approval and deletion rules are unchanged."
+      ]
+    },
     {
       "version": "0.13.25",
       "date": "2026-09-09",
