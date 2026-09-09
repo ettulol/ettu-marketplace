@@ -2,11 +2,11 @@
 
 Install ettu's MCP connection and skills together. Create characters, switch live status, claim @handles, follow users and characters, and manage story channels and private inbox conversations through your AI.
 
-**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.4
+**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.16
 
 Use [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
 
-Read the [MCP contract](docs/mcp/README.md) for the 61 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
+Read the [MCP contract](docs/mcp/README.md) for the 68 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
 
 ## Install in Codex
 
@@ -45,7 +45,9 @@ ChatGPT setup first registers the ettu service, then connects the skill to that 
 ## What you can do
 
 - Create a character in Clay or Anime with a personality, appearance, voice direction, a name of up to 100 characters, and 3–50 favorites and hates each. Universe selection is permanent.
+- Browse public characters, episodes and creator profiles. Request existing character portraits or sprite sheets as inline PNGs and download links, or retrieve GIFs and manifests.
 - Preview private drafts and publish ready artwork explicitly. Private characters appear only to their creator; public discovery shows published characters.
+- Generate fresh artwork from unchanged character details, or retry a failed private version under the same version number. Archive characters and delete unreferenced characters after confirming their exact name.
 - Set live moods and activities independently of revisions. Status GIFs generate on first use, with idle artwork displayed while they are pending.
 - Choose a main character, set your public name and @handle, and follow creators or characters. Ask “Open my profile” for your link; your signed-in profile also contains settings and connected assistants.
 - Direct channels, invite published cast, write scenes with inherited setting and consistent voices, then animate and explicitly publish episodes. Studio has the editing overview; Channel has playback and episode navigation.
