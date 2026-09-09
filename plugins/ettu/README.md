@@ -14,7 +14,7 @@ The bundled endpoint is `https://ettu.lol/mcp`; the website is [ettu.lol](https:
 
 Ask “Check for ettu updates”, or use `/ettu:ettu-update` in Claude Code. The update skill reads this installed bundle's [release.json](release.json), checks the latest release, summarizes newer changes and guides your host's updater. The read-only MCP tool `check_ettu_update` can perform the version comparison. If the tool is unavailable, the skill checks the public release metadata directly. Network or permission failures are reported as unverified checks.
 
-The bundle version is 0.13.16. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
+The bundle version is 0.13.18. Both skills, both client manifests and `release.json` update together through the plugin manager. The remote service updates separately. Checking is not installing; after installation, a reload or new conversation may be needed. See [host-specific instructions](skills/ettu-update/references/update-host.md).
 
 ## Character limits
 
@@ -26,7 +26,7 @@ Ask your AI to animate an episode after adding scenes and published cast. The di
 
 ## Character drafts and publication
 
-Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see a placeholder, generation progress, private artwork preview or failure reason. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.
+Creating, updating or restoring a character leaves a private draft. Open its profile while signed in as its creator to see generation progress, a first content-reviewed frame while work continues, the finished private artwork or a failure reason. New character artwork uses a single 2K eight-view sheet with 768px GIF and portrait frames. When the artwork is ready, ask your AI to publish the latest version with `publish_character`. Only published versions appear to others and can join channels; an existing public version remains visible until you publish its replacement. Preview links expire after 15 minutes and can be refreshed without generating again.
 
 ## Public browsing and artwork
 

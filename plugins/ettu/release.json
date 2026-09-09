@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.16",
+  "version": "0.13.18",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.18",
+      "date": "2026-09-09",
+      "changes": [
+        "New character generations request one 2K eight-view sheet and preserve 768px frames in the sprite, portrait and rotating GIF. Existing artwork and saved 1K jobs keep their settings.",
+        "Creator pages and collections show the first content-reviewed frame while generation continues. Owner MCP reads offer the same private work-in-progress image through include_generated_frames.",
+        "Facing directions are more explicit for every angle and use the same definitions in generation, view classification and targeted repairs. Preview reads never generate or publish artwork."
+      ]
+    },
     {
       "version": "0.13.16",
       "date": "2026-09-08",
