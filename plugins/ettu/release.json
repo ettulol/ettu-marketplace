@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.23",
+  "version": "0.13.24",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.24",
+      "date": "2026-09-09",
+      "changes": [
+        "Artwork options groups character downloads. Status controls use Draw again and Check request, with full owner-only errors under What happened? and the same durable generation requests.",
+        "Public character profiles group Appearance, Voice and extra traits under More about the character, with a Created by section at the bottom of the details column.",
+        "The loading face draws a white outline, black fill, eyes and mouth in sequence. Assistant guidance matches the simplified labels; MCP tools, approval and publication rules are unchanged."
+      ]
+    },
     {
       "version": "0.13.23",
       "date": "2026-09-09",
