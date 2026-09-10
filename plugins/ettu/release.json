@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.30",
+  "version": "0.13.31",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.31",
+      "date": "2026-09-10",
+      "changes": [
+        "Channel creators can rename a channel from Settings, with immediate heading updates and protection against stale edits. Staff and viewers cannot rename it.",
+        "The existing update_channel MCP tool now accepts name-only updates: omitted description and visibility are preserved. UI and MCP share validation and the database ownership/version lock; channel URLs, cast, episodes and publication stay unchanged.",
+        "The sign-in panel fills the height below the header with a thinner gray divider. Assistant guidance and the 79-tool contract are synchronized; explicit privacy changes and deletion keep their existing authorization requirements."
+      ]
+    },
     {
       "version": "0.13.30",
       "date": "2026-09-10",
