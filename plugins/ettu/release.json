@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.40",
+  "version": "0.13.41",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.41",
+      "date": "2026-09-10",
+      "changes": [
+        "New video renders default to veo-3.1-generate-preview. Exact-source retries keep their saved model, durations and compatible work; a new rendition uses the current default.",
+        "Opening-frame prompts explicitly map published portraits to characters and keep scenery references from redefining cast identity. Motion prompts preserve identity and style without reducing the existing prompt allowance.",
+        "Video plan has one compact preview above the full shot list, Previous/Next controls and optional details. Selecting a listed shot returns to the preview; saved media still uses the existing private MCP read."
+      ]
+    },
     {
       "version": "0.13.40",
       "date": "2026-09-10",
