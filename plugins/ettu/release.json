@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.41",
+  "version": "0.13.42",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.42",
+      "date": "2026-09-10",
+      "changes": [
+        "New video renders default to the less expensive veo-3.1-fast-generate-preview, retaining 720p and 4/6/8-second shots. Saved-source retries keep their original model; switching an existing story to Fast requires an intentionally new render.",
+        "Published character reference mapping, identity-preserving direction and the compact Video plan player with Previous/Next controls remain available through the same UI and MCP operations."
+      ]
+    },
     {
       "version": "0.13.41",
       "date": "2026-09-10",
