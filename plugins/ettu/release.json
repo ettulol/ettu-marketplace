@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.38",
+  "version": "0.13.39",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.39",
+      "date": "2026-09-10",
+      "changes": [
+        "New characters receive saved variation in unspecified design details; creator descriptions and universe style take precedence. Delivery retries keep their accepted design choices.",
+        "Later versions preserve the published identity or the last owner-approved private portrait before first publication. The private identity reference survives version pruning; sprites still require approval of the exact image.",
+        "My Characters tiles align left to right inside the centered page. Existing UI and MCP generation operations share the same identity and request-key rules."
+      ]
+    },
     {
       "version": "0.13.38",
       "date": "2026-09-10",
