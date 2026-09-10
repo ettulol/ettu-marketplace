@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.33",
+  "version": "0.13.34",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.34",
+      "date": "2026-09-10",
+      "changes": [
+        "Clay character and scene prompts explicitly request fine grain, pores and hand-sculpted surface texture while keeping faces clear. Surface-finish variations alone do not trigger automatic corrections or paid retries.",
+        "Characters has a My Characters link alongside world filters. Small card status dots expand their label on activation and close on Escape, outside interaction or focus leaving, with larger touch targets and more inset space.",
+        "Home says Tell your story (or theirs). On mobile, the paragraph wraps around the smaller group artwork instead of reserving a separate image row. The existing model, approval flow and MCP operations are unchanged."
+      ]
+    },
     {
       "version": "0.13.33",
       "date": "2026-09-10",
