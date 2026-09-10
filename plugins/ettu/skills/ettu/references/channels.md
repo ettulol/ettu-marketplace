@@ -124,7 +124,7 @@ Inspect saved pictures and clips with `get_episode_video_assets` (directors/staf
 
 New video commands default to Google `veo-3.1-fast-generate-preview`, selected by the server. The format stays 720p and 16:9, with the director's existing 4/6/8-second timing. `retry_episode_video` keeps the source model; to use the current default for an older Lite or Standard attempt, obtain authorization for a new rendition and call `animate_channel_episode` with a fresh request key. Do not silently change models on a delivery retry or promise identical character appearance. Published portraits are explicitly mapped to character keys in opening-frame prompts; scenery references supply the setting, and the short motion direction preserves identity and style. This adds no automatic identity-based paid corrections.
 
-Studio → Video plan places a compact player above the full shot list. Previous/Next selects a shot without scrolling through the plan. Selecting a listed shot returns to the preview; optional details hold its scene direction. Use `get_episode_video_assets` for the same private reviewed pictures/clips, including failed attempts. Reading or switching shots never generates or publishes.
+Studio → Video plan uses a horizontally scrollable row of shot cards. Selecting a whole card shows its saved video or opening picture and description directly underneath without moving the page; optional Shot details hold its scene direction. Keyboard users can select with Left/Right or Home/End. Draft plans use the same cards and remain explicitly unapproved, without requesting media. Use `get_episode_video_assets` for the same private reviewed pictures/clips, including failed attempts. Reading or switching shots never generates or publishes.
 
 ## Personal activity
 

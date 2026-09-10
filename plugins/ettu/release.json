@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.44",
+  "version": "0.13.45",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.45",
+      "date": "2026-09-10",
+      "changes": [
+        "Video plan uses horizontally scrollable shot cards with one selected video and description directly underneath. Draft outlines use the same layout and stay explicitly unapproved.",
+        "Saved shot browsing reuses get_episode_video_assets, including failed renders, without generation or publication. Director Activity adds space inside the status message and event rows."
+      ]
+    },
     {
       "version": "0.13.44",
       "date": "2026-09-10",
