@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.39",
+  "version": "0.13.40",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.40",
+      "date": "2026-09-10",
+      "changes": [
+        "Studio Video plan shows saved shot outlines and individual reviewed pictures/clips; Activity no longer repeats the current plan.",
+        "get_episode_video_assets exposes private saved shot media to directors and staff, including failed or cancelled renders.",
+        "retry_episode_video and the UI Try again control reuse the exact saved plan, compatible reviewed clips and opening pictures. Durable receipts prevent duplicate retries; story, cast and settings changes are checked before accepting generation."
+      ]
+    },
     {
       "version": "0.13.39",
       "date": "2026-09-10",
