@@ -28,6 +28,8 @@ On a stale-version error, read again and reconcile the user's intended change; d
 
 ## Input conventions and invariants
 
+- **Activity** in the sidebar shows a glowing indicator for your queued/running work and opens `/activity`. `get_my_activity` returns the same private list of character image/artwork/status animation tasks and episode videos in channels you direct, plus images waiting for approval. It is paginated with `offset` (50 per page); `total`, `running_count` and `waiting_count` cover all tasks. Each task includes its name, plain-language label, progress when available, version, creation time and destination URL. Finished, failed and cancelled work is excluded. Other owners, channel staff, guests and subscribers do not gain access to your activity list. No provider IDs, raw workflow data or prompts are returned. Reading or navigating never starts, retries, confirms, cancels or publishes work.
+
 - Switching between Studio's Video plan and Activity keeps one retry card for the selected failed/cancelled video. Navigation never invokes `retry_episode_video`; generation still requires an explicit Try again/Check request action or authorized MCP command. This is a display fix over the existing operations, with no schema or generation changes.
 
 - New video commands default to Google `veo-3.1-fast-generate-preview`, selected by the server. Explicit source retries retain their saved model; an older Lite or Standard attempt needs an intentional new `animate_channel_episode` command to use the new default. All generation requests retain their durable keys and publication boundary. Portrait reference order is explicitly mapped, scenery references cannot redefine cast identity, and motion directions preserve identity/style within the existing prompt allowance. Studio Video plan places one compact preview above the shot list with Previous/Next navigation; list selection returns to that preview. This uses existing private saved-shot reads and adds no polling or generation.
@@ -141,6 +143,7 @@ These are semantic summaries, not validated output schemas. SQL-backed objects m
 | `get_character` | Latest private revision/definition/interview, `id` (character), `revision_id`, generation data, signed assets, publication information, `has_been_published`, `archived_at` and `profile_url`. |
 | `get_character_version` | Retained revision details, definition/interview, assets and generation settings; differs from the latest-read envelope. |
 | `list_character_versions` | `{id, current_version, retention_limit: 20, versions: [...]}`, newest version first, with names, publication dates and current published markers. |
+| `get_my_activity` | `{tasks, total, running_count, waiting_count, offset}`. Up to 50 active or approval-ready tasks with safe labels and character/episode destination URLs, newest first. Only owned characters and directed channels; no raw workflow/provider data. |
 | `get_live_status` | `{states: [...]}` in requested-topic order. Each state has `key`, `kind`, optional resource `id`, `available`, and opaque `details_token`, `media_token`, `activity_token`. Authorized character/collection states include compact revision progress; episode states include role-filtered video progress. No definitions, interviews, scenes, signed URLs or image bytes. |
 | `delete_character_version` | `{id, deleted_version, character_deleted, current_version}`; `current_version` is null when the final private character is deleted. |
 | `create_character`, `update_character`, `restore_character_version` | Saved identity/version data plus `publication_status: "draft"` and `profile_url`; creation/restore also include a next-step message. |
@@ -241,7 +244,7 @@ Directors/staff see the same findings in Studio → Activity, `list_episode_vide
 
 ## Compact live status
 
-`get_live_status` is a read-scoped, authenticated snapshot shared with the website. Batch active interests in `topics`: `{kind: "character", id, version?}`, `{kind: "channel", id}`, `{kind: "episode", id}`, `{kind: "my_characters", offset?}` or `{kind: "channels", offset?, universe?}`. Use UUIDs, at most 50 explicit resources, and at most one page of each collection (52 topics total). Topics must be unique. Collection pages contain up to 50 records; offsets are 0–100,000 and default to 0. A character topic without `version` includes up to 20 retained revisions; an explicit version follows that version through same-version generation retries. Episode progress includes up to 20 recent render versions for directors/staff and only the selected published video for a viewer.
+`get_live_status` is a read-scoped, authenticated snapshot shared with the website. Batch active interests in `topics`: `{kind: "character", id, version?}`, `{kind: "channel", id}`, `{kind: "episode", id}`, `{kind: "my_characters", offset?}`, `{kind: "channels", offset?, universe?}` or `{kind: "my_activity"}`. The activity topic returns only private running/waiting counts and a change token; use `get_my_activity` for its paginated task details. Use UUIDs, at most 50 explicit resources, and at most one page of each collection plus the activity summary (53 topics total). Topics must be unique. Collection pages contain up to 50 records; offsets are 0–100,000 and default to 0. A character topic without `version` includes up to 20 retained revisions; an explicit version follows that version through same-version generation retries. Episode progress includes up to 20 recent render versions for directors/staff and only the selected published video for a viewer.
 
 Character topics and `my_characters` require ownership. Channel and episode topics apply the existing director/staff/viewer and publication rules. Missing and inaccessible IDs return the same `available: false` envelope. Disabled accounts cannot read. Opaque tokens are equality markers for relevant full-detail, media and director-activity changes, not authorization, timestamps, event sequences or generation receipts. Private draft activity does not change a viewer's public tokens. Error summaries are limited to 200 characters; use full reads for explanations and diagnostics.
 
@@ -256,7 +259,7 @@ The publisher regenerates this README and JSON together from the application rep
 ## Generated tool inventory
 
 <!-- BEGIN GENERATED MCP CONTRACT -->
-There are **85 tools**: 4 baseline, 40 read-scoped, and 41 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
+There are **86 tools**: 4 baseline, 41 read-scoped, and 41 write-scoped. Every HTTP MCP request still requires an authorized ettu OAuth token.
 
 The fields below summarize inputs. `?` means optional. See [contract.json](contract.json) for exact JSON Schemas, nested properties, defaults, descriptions and annotations. Additional runtime/database checks are described above.
 
@@ -293,7 +296,8 @@ The fields below summarize inputs. `?` means optional. See [contract.json](contr
 | [get_episode_video_report](#get_episode_video_report) | `characters:read` | video: UUID; before?: integer; plan_revision?: integer; shot?: integer |
 | [get_inbox_message](#get_inbox_message) | `characters:read` | id: UUID |
 | [get_inbox_thread](#get_inbox_thread) | `characters:read` | id: UUID; offset?: integer = 0 |
-| [get_live_status](#get_live_status) | `characters:read` | topics: array&lt;object \| object \| object \| object \| object&gt; |
+| [get_live_status](#get_live_status) | `characters:read` | topics: array&lt;object \| object \| object \| object \| object \| object&gt; |
+| [get_my_activity](#get_my_activity) | `characters:read` | offset?: integer = 0 |
 | [get_my_profile](#get_my_profile) | `characters:read` | none |
 | [get_public_character](#get_public_character) | `characters:read` | target: string |
 | [get_public_profile](#get_public_profile) | `characters:read` | target: string |
@@ -536,7 +540,13 @@ Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":fal
 
 ### get_live_status
 
-Read compact current character generation, image approval and channel/episode video status for several resources at once. Character topics require ownership; channel/episode topics obey the same director, staff, viewer and publication boundaries as full reads. my_characters and channels are paginated, 50 per page. Unavailable and inaccessible IDs have the same response. Read full details or reviewed artwork with the existing character/image/channel/episode tools when needed. Change tokens are opaque equality markers, not event history or generation receipts. This read never generates, confirms, retries, deletes or publishes anything; retain the original request key when checking a command with a lost response.
+Read compact current character generation, image approval and channel/episode video status for several resources at once. Character topics require ownership; channel/episode topics obey the same director, staff, viewer and publication boundaries as full reads. my_characters and channels are paginated, 50 per page. my_activity returns only your running_count, waiting_count and an opaque change token across all owned character tasks and videos in channels you direct; use get_my_activity for the paginated task list. Unavailable and inaccessible IDs have the same response. Read full details or reviewed artwork with the existing character/image/channel/episode tools when needed. Change tokens are opaque equality markers, not event history or generation receipts. This read never generates, confirms, retries, deletes or publishes anything; retain the original request key when checking a command with a lost response.
+
+Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"idempotentHint":true,"openWorldHint":false}`.
+
+### get_my_activity
+
+Read your running character images, character/status animations and videos in channels you direct, plus character images waiting for your approval. Returns up to 50 tasks, newest first, with names, plain-language labels, progress when available, version, creation time and links back to the character or episode. Counts cover every page. Completed, failed and cancelled work is excluded. Private to the verified account; staff, invited guests and subscribers do not see another creator's tasks here. This read never starts, retries, cancels, approves or publishes anything. Use existing character/image/episode tools for details and act only on the user's authorization.
 
 Scope: characters:read. Annotations: `{"readOnlyHint":true,"destructiveHint":false,"idempotentHint":true,"openWorldHint":false}`.
 

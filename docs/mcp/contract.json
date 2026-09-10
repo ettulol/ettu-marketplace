@@ -1360,13 +1360,13 @@
     },
     {
       "name": "get_live_status",
-      "description": "Read compact current character generation, image approval and channel/episode video status for several resources at once. Character topics require ownership; channel/episode topics obey the same director, staff, viewer and publication boundaries as full reads. my_characters and channels are paginated, 50 per page. Unavailable and inaccessible IDs have the same response. Read full details or reviewed artwork with the existing character/image/channel/episode tools when needed. Change tokens are opaque equality markers, not event history or generation receipts. This read never generates, confirms, retries, deletes or publishes anything; retain the original request key when checking a command with a lost response.",
+      "description": "Read compact current character generation, image approval and channel/episode video status for several resources at once. Character topics require ownership; channel/episode topics obey the same director, staff, viewer and publication boundaries as full reads. my_characters and channels are paginated, 50 per page. my_activity returns only your running_count, waiting_count and an opaque change token across all owned character tasks and videos in channels you direct; use get_my_activity for the paginated task list. Unavailable and inaccessible IDs have the same response. Read full details or reviewed artwork with the existing character/image/channel/episode tools when needed. Change tokens are opaque equality markers, not event history or generation receipts. This read never generates, confirms, retries, deletes or publishes anything; retain the original request key when checking a command with a lost response.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "topics": {
             "minItems": 1,
-            "maxItems": 52,
+            "maxItems": 53,
             "type": "array",
             "items": {
               "oneOf": [
@@ -1456,6 +1456,19 @@
                   "properties": {
                     "kind": {
                       "type": "string",
+                      "const": "my_activity"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
                       "const": "channels"
                     },
                     "offset": {
@@ -1484,6 +1497,32 @@
         "required": [
           "topics"
         ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "required_scope": "characters:read"
+    },
+    {
+      "name": "get_my_activity",
+      "description": "Read your running character images, character/status animations and videos in channels you direct, plus character images waiting for your approval. Returns up to 50 tasks, newest first, with names, plain-language labels, progress when available, version, creation time and links back to the character or episode. Counts cover every page. Completed, failed and cancelled work is excluded. Private to the verified account; staff, invited guests and subscribers do not see another creator's tasks here. This read never starts, retries, cancels, approves or publishes anything. Use existing character/image/episode tools for details and act only on the user's authorization.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "default": 0,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000
+          }
+        },
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {

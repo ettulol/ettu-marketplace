@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.42",
+  "version": "0.13.43",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.43",
+      "date": "2026-09-10",
+      "changes": [
+        "get_my_activity lists your running character images, artwork/status animations and videos in channels you direct, plus images waiting for approval. Safe labels and destination URLs match the website Activity page; no raw provider or workflow details are returned.",
+        "The my_activity live topic adds private running/waiting counts and a change token on the existing stream. The sidebar glows while work is queued/running and links to the current-work list. Viewing activity never starts, retries, approves, cancels or publishes work."
+      ]
+    },
     {
       "version": "0.13.42",
       "date": "2026-09-10",
