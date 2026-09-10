@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.31",
+  "version": "0.13.32",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.32",
+      "date": "2026-09-10",
+      "changes": [
+        "New character, status and episode-opening images use the exact gpt-image-2.5-flare model. Character portraits stay medium-quality 1K; approved sprites stay high-quality 2K with native PNG transparency.",
+        "Accepted versions, checkpoints and request receipts retain their model and approval semantics. Status sheets remain high-quality 1K transparent PNGs, and episode opening images remain high-quality 1K opaque PNGs.",
+        "Home invites you to create a character and dream with other creators in worlds with consistent rules. The group artwork meets the bottom-right banner edge and scales down on mobile."
+      ]
+    },
     {
       "version": "0.13.31",
       "date": "2026-09-10",
