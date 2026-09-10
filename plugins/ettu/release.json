@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.37",
+  "version": "0.13.38",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.38",
+      "date": "2026-09-10",
+      "changes": [
+        "Episode planning budgets natural voice pace, sequential actions and settling time. Reviewed duration-only increases stay within the authorized ceiling; other material changes get the existing single correction with the previous plan as context.",
+        "Activity shows approved video shots or a retained draft outline even after planning fails. The same private planning previews are available through existing MCP report/video reads; inspecting them never starts generation.",
+        "The Activity icon glows during active work, and channel tabs use yellow selection highlights. Centered profile layouts and compact personal character grids preserve draft blueprint backgrounds and the outlined tu logo."
+      ]
+    },
     {
       "version": "0.13.37",
       "date": "2026-09-10",
