@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.28",
+  "version": "0.13.29",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.29",
+      "date": "2026-09-09",
+      "changes": [
+        "Theme controls live in the sidebar for every visitor. The signed-out header shows Create and Login; Connect your AI stays in the sidebar.",
+        "Mobile Search expands from an icon into a focused search field with close and Escape controls. Home shelves fit narrow screens, and personal channel cards have borders and stable loading/refresh behavior.",
+        "Website navigation guidance and the 79-tool contract are synchronized. Display preferences add no MCP operations; generation, publication and access rules are unchanged."
+      ]
+    },
     {
       "version": "0.13.28",
       "date": "2026-09-09",
