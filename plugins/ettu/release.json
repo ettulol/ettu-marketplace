@@ -1,11 +1,21 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.36",
+  "version": "0.13.37",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.37",
+      "date": "2026-09-10",
+      "changes": [
+        "Separate Add my characters from Invite characters. New MCP tools search eligible foreign cast, list received/sent invitations and invite a character for exactly one episode; website creators can explicitly accept, decline or cancel.",
+        "Channel acceptance covers all channel episodes and staff membership. Episode acceptance grants only that episode, without channel membership; scene/video validation and deletion reference checks enforce the same scope in UI and MCP.",
+        "Video planning derives runtime from shot durations and treats summary-only arithmetic discrepancies as advice. Material story, dialogue and actual timing checks remain; no automatic retry of existing failed renders.",
+        "Smaller profile artwork, rounded character images and buttons, simpler Versions/Studio borders, darker search and footer dividers, and yellow selected-world filters. Canonical guidance and the 83-tool contract are synchronized."
+      ]
+    },
     {
       "version": "0.13.36",
       "date": "2026-09-10",
@@ -241,7 +251,7 @@
       "version": "0.13.9",
       "date": "2026-09-08",
       "changes": [
-        "Channel creators now find confirmed deletion under Settings → Danger zone on the channel details page. The same delete_channel MCP approval and ownership checks apply.",
+        "Channel creators now find confirmed deletion under Settings \u2192 Danger zone on the channel details page. The same delete_channel MCP approval and ownership checks apply.",
         "Channel deletion now supports Clerk accounts without a legacy Supabase login. Durable receipts preserve safe retries and report pending public-media removal.",
         "The outlined et letters are slightly thicker across the website and downloadable wordmarks."
       ]
@@ -281,7 +291,7 @@
       "changes": [
         "Creator-only frame previews let users inspect retained, content-reviewed character sprites after a universe/style or other quality failure. get_character and get_character_version accept include_generated_frames=true; previewing never approves publication.",
         "set_character_status can redraw even a completed status sprite/GIF with regenerate_animation=true and a UUID request_key. Reuse the key after an uncertain response. Pending generation is reused and the previous approved GIF remains visible through replacement generation or failure.",
-        "Creators can change a character’s status or request a redraw directly on its website profile. Status and artwork replacement remain separate from character versions.",
+        "Creators can change a character\u2019s status or request a redraw directly on its website profile. Status and artwork replacement remain separate from character versions.",
         "Episode director planning and repair decisions now use GPT-5.6 Sol with medium reasoning; artwork reviews keep their separate model. Remote MCP updates server-side; updating this bundle refreshes assistant guidance."
       ]
     },
@@ -334,10 +344,10 @@
       "date": "2026-09-06",
       "changes": [
         "Production ettu plugin for https://ettu.lol/mcp, with OAuth sign-in and installation guidance for Codex, Claude and ChatGPT.",
-        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3–50 distinct items each.",
+        "Character interviews, permanent Clay and Anime universes, personality and voice direction, private artwork previews, version history and explicit publication. Names allow up to 100 characters; favorites and hates allow 3\u201350 distinct items each.",
         "Live moods and activities with status GIFs generated on first use, plus public profiles, main characters, unique handles and following.",
         "Story channels with director controls, cast invitations, episodes, scenes, staff proposals and private inbox conversations. Scene guidance preserves scenery, personality, voice and continuity; episode videos are published explicitly.",
-        "The ettu-update skill checks release metadata, explains available changes and guides the host’s plugin update process.",
+        "The ettu-update skill checks release metadata, explains available changes and guides the host\u2019s plugin update process.",
         "Yellow ettu dot branding for the plugin and both skills, with self-contained image assets and the public PNG at https://ettu.lol/brand/pwa-512.png.",
         "Public MCP contract documentation includes all 55 tools, input schemas, permissions and workflow requirements."
       ]
