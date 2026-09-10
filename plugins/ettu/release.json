@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.29",
+  "version": "0.13.30",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.30",
+      "date": "2026-09-10",
+      "changes": [
+        "The website header shows Create only after sign-in. Theme controls are compact sidebar icons for all visitors, and account actions align consistently.",
+        "Channel headers use a clickable creator avatar beside the world badge. The existing get_public_profile tool provides the same published main character; episode titles omit the duplicate episode number.",
+        "Navigation guidance and the 79-tool contract are synchronized. Public profile reads, generation, publication and access rules are unchanged."
+      ]
+    },
     {
       "version": "0.13.29",
       "date": "2026-09-09",
