@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.43",
+  "version": "0.13.44",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.44",
+      "date": "2026-09-10",
+      "changes": [
+        "Channel Add characters groups own-character adding and scoped invitations. Channel portraits move beside the menu; episode participants appear below Watch/Studio using existing cast and scene reads.",
+        "Make a new version moves above the Versions sidebar history with the selected source identified. Artwork retries and approvals stay with their artwork; durable keys, ownership and publication behavior are unchanged."
+      ]
+    },
     {
       "version": "0.13.43",
       "date": "2026-09-10",
