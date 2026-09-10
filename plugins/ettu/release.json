@@ -1,11 +1,20 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.32",
+  "version": "0.13.33",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.33",
+      "date": "2026-09-10",
+      "changes": [
+        "Character previews now request exactly one full-body front portrait, with separate style, background and review instructions that avoid the old sprite and rotation conflict. Medium 1K previews still require owner approval before a high-quality 2K sprite.",
+        "New redraws adopt the current portrait prompt while keeping the same version, model and identity. Each candidate freezes its prompt and settings; delivery retries preserve accepted images and receipts. Multi-view failures remain inspectable without automatic paid retries.",
+        "Mobile Home artwork is half its previous size. Smaller status badges sit at the bottom-right; Home and sign-in copy is simplified and the old tagline is removed."
+      ]
+    },
     {
       "version": "0.13.32",
       "date": "2026-09-10",
