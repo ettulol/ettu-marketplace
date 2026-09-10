@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.45",
+  "version": "0.13.46",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.46",
+      "date": "2026-09-10",
+      "changes": [
+        "My Characters and My Settings have separate owner-only pages. The account menu opens My Settings; public creator profiles stay public and old owner settings bookmarks remain compatible.",
+        "Shared page padding aligns content and the sidebar. Idle character status dots use yellow with a white border, Main character badges use yellow and black, and character Settings omits its duplicate heading. Existing authenticated reads and confirmed lifecycle operations are unchanged."
+      ]
+    },
     {
       "version": "0.13.45",
       "date": "2026-09-10",
