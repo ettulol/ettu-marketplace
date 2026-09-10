@@ -2132,7 +2132,7 @@
     },
     {
       "name": "publish_character",
-      "description": "Publish your character's latest ready version after the user's explicit publication request. Read get_character first and pass its current expected_version. Artwork generation and updates only create private drafts; ready does not mean public. This operation makes the approved description/artwork visible to others and eligible for channel casting. Only the owner can publish; unfinished, rejected, failed or stale versions cannot be published. Repeating publication of the same latest version is safe. No generation is queued.",
+      "description": "Publish your character's latest ready version after the user's explicit publication request. Read get_character first and pass its current expected_version. Artwork generation and updates only create private drafts; ready does not mean public. The website offers Publish character once the latest approved artwork is ready; I like it! only approves image generation. This operation makes the approved description/artwork visible to others and eligible for channel casting. Only the owner can publish; unfinished, rejected, failed, archived or stale versions cannot be published. Repeating publication of the same latest version is safe. No generation is queued.",
       "inputSchema": {
         "type": "object",
         "properties": {

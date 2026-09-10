@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.34",
+  "version": "0.13.35",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.35",
+      "date": "2026-09-10",
+      "changes": [
+        "Owners can publish the latest ready character version directly in the website. Publish character uses the same ownership, readiness, archive and version-lock checks as MCP; image approval remains separate and publication starts no generation.",
+        "Character versions show the creation time and local timezone beside the existing date under More options. The existing list_character_versions and get_character_version reads already expose the full created_at timestamp; retry and publication behavior are unchanged."
+      ]
+    },
     {
       "version": "0.13.34",
       "date": "2026-09-10",
