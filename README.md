@@ -1,10 +1,10 @@
-# ettu marketplace
+# ettu plugins
 
 Install ettu's MCP connection and skills together. Create characters, switch live status, claim @handles, follow users and characters, and manage story channels and private inbox conversations through your AI.
 
-**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.27
+**Website:** [ettu.lol](https://ettu.lol) · **MCP endpoint:** `https://ettu.lol/mcp` · **Bundle:** 0.13.51
 
-Use [ettulol/ettu-marketplace](https://github.com/ettulol/ettu-marketplace) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
+Use [ettulol/ettu-plugins](https://github.com/ettulol/ettu-plugins) when your AI app asks for a **marketplace repository**. Use `https://ettu.lol/mcp` when it asks for an **MCP server URL**. The hosted service runs on ettu; users install only configuration and skills, then sign in with their own approved ettu account. No local server or API key is needed.
 
 Read the [MCP contract](docs/mcp/README.md) for the 72 tools, scopes and workflows, or [release notes](plugins/ettu/release.json) for changes.
 
@@ -13,11 +13,11 @@ Read the [MCP contract](docs/mcp/README.md) for the 72 tools, scopes and workflo
 Run:
 
 ```sh
-codex plugin marketplace add https://github.com/ettulol/ettu-marketplace
-codex plugin add ettu@ettu-marketplace
+codex plugin marketplace add https://github.com/ettulol/ettu-plugins
+codex plugin add ettu@ettu-plugins
 ```
 
-If Codex asks for a marketplace repository URL, provide the same **repository URL**, then install **ettu** from **ettu-marketplace**. Do not provide a raw JSON URL, a link to `plugins/ettu`, or the MCP service URL in that repository field.
+If Codex asks for a marketplace repository URL, provide the same **repository URL**, then install **ettu** from **ettu-plugins**. Do not provide a raw JSON URL, a link to `plugins/ettu`, or the MCP service URL in that repository field.
 
 Start a new Codex conversation after installing. Complete ettu OAuth sign-in when prompted. Ask “Show my ettu characters” as a read-only check. The skill is bundled and available across projects on the host where the plugin is installed; no per-project skill copy is needed. Enable it on other hosts separately. Generic character brainstorming does not request publication on ettu.
 
@@ -28,8 +28,8 @@ These commands are available in current Codex CLI versions; check `codex plugin 
 Run inside Claude Code:
 
 ```text
-/plugin marketplace add https://github.com/ettulol/ettu-marketplace
-/plugin install ettu@ettu-marketplace
+/plugin marketplace add https://github.com/ettulol/ettu-plugins
+/plugin install ettu@ettu-plugins
 ```
 
 Choose **user** scope to use it across your projects. Follow the install summary if it asks you to reload plugins, or start a new session. Open `/mcp` and authenticate the ettu connection. Ask “Show my ettu characters”; `/ettu:ettu` explicitly invokes the bundled skill.
@@ -54,6 +54,10 @@ ChatGPT setup first registers the ettu service, then connects the skill to that 
 
 The `ettu` skill is optional for MCP access: a connected AI can discover the server tools automatically. The bundle adds interview, publication and storytelling guidance plus the `ettu-update` skill.
 
+## Existing installations after the rename
+
+The repository and marketplace identifier are now `ettu-plugins`; the plugin name remains `ettu`. An installation registered as `ettu-marketplace` may retain that old identifier after the GitHub rename. Use the installation commands above to register the new repository and install `ettu@ettu-plugins` in the same scope, preserving any custom connection settings. Verify the new installation and disable the previous plugin entry in your host's plugin manager so only one ettu plugin is active. Then start a new conversation or reload plugins. Remote MCP-only connections continue to use `https://ettu.lol/mcp`.
+
 ## Check for updates
 
 Ask **“Check for ettu updates”**. The bundled `ettu-update` skill reports your installed version, the latest available version, relevant changes, and how to update in your AI app. In Claude Code, `/ettu:ettu-update` invokes it explicitly.
@@ -63,15 +67,15 @@ The remote MCP service updates on the server. Local skills and connection config
 For an existing Codex Git marketplace installation:
 
 ```sh
-codex plugin marketplace upgrade ettu-marketplace
-codex plugin add ettu@ettu-marketplace
+codex plugin marketplace upgrade ettu-plugins
+codex plugin add ettu@ettu-plugins
 ```
 
 For Claude Code:
 
 ```text
-/plugin marketplace update ettu-marketplace
-/plugin update ettu@ettu-marketplace
+/plugin marketplace update ettu-plugins
+/plugin update ettu@ettu-plugins
 /reload-plugins
 ```
 

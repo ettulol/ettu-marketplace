@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.50",
+  "version": "0.13.51",
   "minimum_supported_version": "0.12.1",
-  "repository_url": "https://github.com/ettulol/ettu-marketplace",
-  "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
+  "repository_url": "https://github.com/ettulol/ettu-plugins",
+  "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-plugins/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.51",
+      "date": "2026-09-11",
+      "changes": [
+        "Renames the distribution repository and both client marketplace catalogs to ettu-plugins. Install and update commands now use ettu@ettu-plugins; the plugin itself remains named ettu.",
+        "Updates repository links and release checks to the canonical GitHub URL, with migration guidance for installations registered under the previous marketplace name."
+      ]
+    },
     {
       "version": "0.13.50",
       "date": "2026-09-11",

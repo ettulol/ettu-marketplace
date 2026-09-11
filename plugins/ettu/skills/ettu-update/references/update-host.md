@@ -1,14 +1,18 @@
 # Update using the installed host
 
-First identify how THIS plugin was installed: marketplace, explicit local directory, ZIP, or managed workspace. Follow that source. Commands below use this distribution's marketplace name, `ettu-marketplace`; confirm the installed source before using them.
+First identify how THIS plugin was installed: marketplace, explicit local directory, ZIP, or managed workspace. Follow that source. Commands below use this distribution's marketplace name, `ettu-plugins`; confirm the installed source before using them.
+
+## Marketplace rename
+
+The current repository is `https://github.com/ettulol/ettu-plugins` and its marketplace identifier is `ettu-plugins`. If the host still registers this distribution as `ettu-marketplace`, treat the change as a source migration: add the canonical repository through the host's marketplace manager, install `ettu@ettu-plugins` in the existing scope, and preserve custom connection settings. After verifying the new installation, disable the old plugin entry so only one ettu plugin is active, then reload or start a new conversation. Do not assume a GitHub repository rename also renames an installed marketplace. Keep explicit forks and pinned sources unless the user requested migration.
 
 ## Codex CLI or Codex app with a local CLI
 
 For a configured Git marketplace, the supported CLI flow is:
 
 ```sh
-codex plugin marketplace upgrade ettu-marketplace
-codex plugin add ettu@ettu-marketplace
+codex plugin marketplace upgrade ettu-plugins
+codex plugin add ettu@ettu-plugins
 ```
 
 The first command refreshes the marketplace snapshot; the second installs its plugin. Check `codex plugin --help` if the installed CLI uses a different command surface. Inspect installed details through the plugin manager or `codex plugin list`; do not confuse an available catalog version with the installed copy. Start a new conversation after updating so it loads the new skills/tools.
@@ -22,12 +26,12 @@ For app-managed or workspace-managed plugins without local CLI access, use the p
 For an installed marketplace plugin, run inside Claude Code:
 
 ```text
-/plugin marketplace update ettu-marketplace
-/plugin update ettu@ettu-marketplace
+/plugin marketplace update ettu-plugins
+/plugin update ettu@ettu-plugins
 /reload-plugins
 ```
 
-Use the same install scope as the existing plugin. Follow the host's reload/restart message if `/reload-plugins` is unavailable. For future automatic updates, users can open `/plugin`, select Marketplaces → ettu-marketplace → Enable auto-update. Third-party marketplaces default to auto-update off. Installing updates on disk and reloading the active session are separate steps.
+Use the same install scope as the existing plugin. Follow the host's reload/restart message if `/reload-plugins` is unavailable. For future automatic updates, users can open `/plugin`, select Marketplaces → ettu-plugins → Enable auto-update. Third-party marketplaces default to auto-update off. Installing updates on disk and reloading the active session are separate steps.
 
 A session started with `claude --plugin-dir ...` uses that local directory, not a marketplace installation. Update the actual source with its owner and reload/restart; do not install a duplicate marketplace copy.
 

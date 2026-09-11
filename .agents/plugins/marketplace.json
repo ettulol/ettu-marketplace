@@ -1,7 +1,7 @@
 {
-  "name": "ettu-marketplace",
+  "name": "ettu-plugins",
   "interface": {
-    "displayName": "Ettu Marketplace"
+    "displayName": "Ettu Plugins"
   },
   "plugins": [
     {
