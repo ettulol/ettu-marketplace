@@ -10,8 +10,8 @@
       "version": "0.13.51",
       "date": "2026-09-11",
       "changes": [
-        "Renames the distribution repository and both client marketplace catalogs to ettu-plugins. Install and update commands now use ettu@ettu-plugins; the plugin itself remains named ettu.",
-        "Updates repository links and release checks to the canonical GitHub URL, with migration guidance for installations registered under the previous marketplace name."
+        "Uses ettu-plugins for the distribution repository and both client marketplace catalogs. Install and update commands use ettu@ettu-plugins; the plugin is named ettu.",
+        "Points repository links and release checks to the canonical GitHub URL."
       ]
     },
     {

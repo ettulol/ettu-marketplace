@@ -2,10 +2,6 @@
 
 First identify how THIS plugin was installed: marketplace, explicit local directory, ZIP, or managed workspace. Follow that source. Commands below use this distribution's marketplace name, `ettu-plugins`; confirm the installed source before using them.
 
-## Marketplace rename
-
-The current repository is `https://github.com/ettulol/ettu-plugins` and its marketplace identifier is `ettu-plugins`. If the host still registers this distribution as `ettu-marketplace`, treat the change as a source migration: add the canonical repository through the host's marketplace manager, install `ettu@ettu-plugins` in the existing scope, and preserve custom connection settings. After verifying the new installation, disable the old plugin entry so only one ettu plugin is active, then reload or start a new conversation. Do not assume a GitHub repository rename also renames an installed marketplace. Keep explicit forks and pinned sources unless the user requested migration.
-
 ## Codex CLI or Codex app with a local CLI
 
 For a configured Git marketplace, the supported CLI flow is:

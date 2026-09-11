@@ -54,10 +54,6 @@ ChatGPT setup first registers the ettu service, then connects the skill to that 
 
 The `ettu` skill is optional for MCP access: a connected AI can discover the server tools automatically. The bundle adds interview, publication and storytelling guidance plus the `ettu-update` skill.
 
-## Existing installations after the rename
-
-The repository and marketplace identifier are now `ettu-plugins`; the plugin name remains `ettu`. An installation registered as `ettu-marketplace` may retain that old identifier after the GitHub rename. Use the installation commands above to register the new repository and install `ettu@ettu-plugins` in the same scope, preserving any custom connection settings. Verify the new installation and disable the previous plugin entry in your host's plugin manager so only one ettu plugin is active. Then start a new conversation or reload plugins. Remote MCP-only connections continue to use `https://ettu.lol/mcp`.
-
 ## Check for updates
 
 Ask **“Check for ettu updates”**. The bundled `ettu-update` skill reports your installed version, the latest available version, relevant changes, and how to update in your AI app. In Claude Code, `/ettu:ettu-update` invokes it explicitly.
