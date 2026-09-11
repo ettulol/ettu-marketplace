@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.48",
+  "version": "0.13.49",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.49",
+      "date": "2026-09-11",
+      "changes": [
+        "Characters adds a heart-marked Following option using the same private list_followed_characters operation as MCP. Pages include up to 50 published characters across worlds, newest follow first, including published archives; private drafts remain hidden.",
+        "Dropdown hover and keyboard focus use yellow with dark text. Mobile banner sentences sit closer together, and the Apple icon adds a white outline around its black face. No follow preference, generation or publication action is added."
+      ]
+    },
     {
       "version": "0.13.48",
       "date": "2026-09-11",
