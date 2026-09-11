@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.47",
+  "version": "0.13.48",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.48",
+      "date": "2026-09-11",
+      "changes": [
+        "World filters use one image dropdown, with All worlds selected initially and contextual My channels or My Characters options. Search and sorting are preserved; the sort dropdown shares the mobile row.",
+        "My Characters cards fill the available phone width. The mobile Home banner anchors its illustration at the bottom, Apple icon assets stay opaque yellow, and Copyright remains in the policy tabs. Existing reads, approvals and generation semantics are unchanged."
+      ]
+    },
     {
       "version": "0.13.47",
       "date": "2026-09-11",
