@@ -1,11 +1,19 @@
 {
   "schema_version": 1,
   "plugin": "ettu",
-  "version": "0.13.46",
+  "version": "0.13.47",
   "minimum_supported_version": "0.12.1",
   "repository_url": "https://github.com/ettulol/ettu-marketplace",
   "latest_manifest_url": "https://api.github.com/repos/ettulol/ettu-marketplace/contents/plugins/ettu/release.json",
   "releases": [
+    {
+      "version": "0.13.47",
+      "date": "2026-09-11",
+      "changes": [
+        "Connect your AI stays in the account dropdown and leaves the sidebar. Create channel is offered on My channels only; public Channels stays focused on browsing. Tablet account controls show the initial.",
+        "Studio descriptions start collapsed; Invitations uses an accessible refresh icon. Character Settings cards are more compact and Watch errors have space below the video. Existing reads, confirmations and generation semantics are unchanged."
+      ]
+    },
     {
       "version": "0.13.46",
       "date": "2026-09-10",
